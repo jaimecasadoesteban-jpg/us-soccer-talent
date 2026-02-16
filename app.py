@@ -29,7 +29,7 @@ def show_contact_form():
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
             st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS "DARK ELITE" (IMAGEN DE FONDO)
+# 3. CSS "DARK ELITE" (ESTILO FINAL)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
@@ -42,23 +42,33 @@ st.markdown("""
     /* FONDO GENERAL */
     .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-    /* --- HERO SECTION CON IMAGEN --- */
+    /* --- HERO SECTION --- */
     .hero-container {
         position: relative;
-        height: 90vh;
         width: 100%;
+        height: 90vh; /* Altura pantalla completa */
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        /* Imagen de fondo de calidad con superposición oscura */
-        background: linear-gradient(rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.8)), url('https://images.unsplash.com/photo-1522778119026-d647f0596c63?q=80&w=2070&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center center;
+        background-color: #000;
+    }
+
+    /* Imagen de fondo (Método infalible) */
+    .hero-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        filter: brightness(0.3); /* Oscurecer para leer texto */
     }
 
     .hero-content {
-        z-index: 1;
+        position: relative;
+        z-index: 2; /* Encima de la imagen */
         text-align: center;
         max-width: 900px;
         padding: 20px;
@@ -72,7 +82,7 @@ st.markdown("""
         font-size: 5.5rem !important;
         line-height: 0.9 !important;
         color: white;
-        text-shadow: 0 0 40px rgba(0,0,0,0.9);
+        text-shadow: 0 0 40px rgba(0,0,0,1);
         margin: 0 !important;
     }
 
@@ -143,9 +153,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. HERO SECTION (CON IMAGEN DE FONDO) ---
+# --- 1. HERO SECTION (HTML + IMAGEN DIRECTA) ---
 st.markdown("""
 <div class="hero-container">
+    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c63?q=80&w=2070&auto=format&fit=crop" class="hero-img">
+    
     <div class="hero-content">
         <p style="color:#38bdf8; font-weight:800; letter-spacing:4px; margin-bottom:15px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
         <h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>
@@ -162,8 +174,6 @@ c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
         show_contact_form()
-
-# (SECCIÓN DE LOGOS ELIMINADA AQUÍ)
 
 # --- 2. SECCIÓN DATOS ---
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -238,15 +248,13 @@ c_faq1, c_faq2 = st.columns([1, 2])
 with c_faq2:
     with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE PARA CONSEGUIR BECA?"):
         st.write("""
-        No necesitas ser profesional, pero sí destacar en tu liga. Las universidades buscan perfiles titulares en **División de Honor, Liga Nacional o Preferente Senior**.
+        No necesitas ser profesional, pero sí destacar en tu liga. Las universidades buscan perfiles titulares en **División de Honor, 2RFEF, 3RFEF o Preferente Senior**.
         Nuestro algoritmo analiza tus minutos jugados y métricas clave. Si estás en un equipo de menor categoría pero tienes estadísticas "fuera de serie" (ej. +20 goles), también hay opciones.
         """)
     
     with st.expander("💸 ¿LA BECA CUBRE EL 100% DE LOS GASTOS?"):
         st.write("""
-        Es posible (Full Ride), pero reservado para el top 1% de los talentos.
-        **La realidad:** La mayoría de jugadores obtienen un **paquete mixto**. Sumamos tu Beca Deportiva + Beca Académica (por tus notas de Bachillerato) + Ayuda Internacional. 
-        Nuestro trabajo es maximizar esa suma para que tu coste final sea mínimo.
+        En caso de que obtengas un 100% de la beca, por supuesto. Las becas deportivas dependen de tu nivel futbolístico y de como puedas encajar en el equipo.
         """)
 
     with st.expander("🎓 ¿QUÉ PASA SI MI INGLÉS NO ES PERFECTO?"):
