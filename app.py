@@ -29,7 +29,7 @@ def show_contact_form():
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
             st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS "DARK ELITE"
+# 3. CSS "DARK ELITE" (CORREGIDO)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
@@ -42,18 +42,17 @@ st.markdown("""
     /* FONDO GENERAL */
     .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-    /* --- HERO SECTION --- */
-    .hero-wrapper {
+    /* --- HERO SECTION CON VIDEO --- */
+    .hero-container {
         position: relative;
-        width: 100%;
         height: 90vh;
+        width: 100%;
         overflow: hidden;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        background: #000;
+        align-items: center;
     }
+
     .hero-video {
         position: absolute;
         top: 50%;
@@ -62,17 +61,17 @@ st.markdown("""
         min-height: 100%;
         width: auto;
         height: auto;
-        z-index: 1;
+        z-index: -1; /* Detrás de todo */
         transform: translate(-50%, -50%);
-        opacity: 0.4;
         object-fit: cover;
+        filter: brightness(0.4); /* Oscurecer */
     }
+
     .hero-content {
-        position: relative;
-        z-index: 10;
+        z-index: 1; /* Delante del video */
         text-align: center;
         max-width: 900px;
-        padding: 0 20px;
+        padding: 20px;
     }
 
     h1 {
@@ -140,19 +139,7 @@ st.markdown("""
         border-radius: 0 10px 10px 0;
     }
 
-    /* --- COMPARATIVA --- */
-    .comparison-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-        border-bottom: 1px solid #334155;
-        align-items: center;
-    }
-    .comp-left { color: #94a3b8; width: 40%; font-size: 0.9rem; }
-    .comp-mid { color: white; width: 20%; font-weight: bold; text-align: center; font-family: 'Kanit'; font-size: 1.2rem; }
-    .comp-right { color: #38bdf8; width: 40%; text-align: right; font-weight: bold; font-size: 1.1rem; }
-
-    /* --- ACORDEÓN FAQ (Nuevo Estilo) --- */
+    /* --- ACORDEÓN FAQ --- */
     .stExpander {
         border: none !important;
         background-color: transparent !important;
@@ -184,13 +171,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. HERO SECTION ---
+# --- 1. HERO SECTION (VÍDEO ARREGLADO) ---
 st.markdown("""
-<div class="hero-wrapper">
-    <video autoplay muted loop playsinline class="hero-video" poster="https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg">
-        <source src="https://videos.pexels.com/video-files/855633/855633-hd_1920_1080_30fps.mp4" type="video/mp4">
+<div class="hero-container">
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="https://cdn.coverr.co/videos/coverr-football-stadium-4k-3340/1080p.mp4" type="video/mp4">
     </video>
-
     <div class="hero-content">
         <p style="color:#38bdf8; font-weight:800; letter-spacing:4px; margin-bottom:15px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
         <h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>
@@ -260,45 +246,7 @@ with col_d2:
     )
     st.plotly_chart(fig, use_container_width=True)
 
-# --- 3. SECCIÓN COMPARATIVA ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-c_comp1, c_comp2 = st.columns([1, 2])
-with c_comp1:
-    st.markdown("<h2 style='font-size:3rem; line-height:1.1; color:white;'>¿POR QUÉ <br><span style='color:#38bdf8'>NOSOTROS?</span></h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color:#94a3b8; font-size:1.1rem; margin-top:20px;'>El mercado ha cambiado. Las universidades ya no fichan por vídeos de YouTube, fichan por métricas.</p>", unsafe_allow_html=True)
-
-with c_comp2:
-    st.markdown("""
-    <div style="background: #0f172a; border-radius: 12px; padding: 10px; border: 1px solid #1e293b;">
-        <div class="comparison-row">
-            <div class="comp-left">AGENCIA TRADICIONAL</div>
-            <div class="comp-mid">VS</div>
-            <div class="comp-right">US SOCCER TALENT</div>
-        </div>
-        <div class="comparison-row">
-            <div class="comp-left">"Tengo contactos"</div>
-            <div class="comp-mid">🤝</div>
-            <div class="comp-right">BASE DE DATOS REAL</div>
-        </div>
-        <div class="comparison-row">
-            <div class="comp-left">Vídeo Highlights subjetivo</div>
-            <div class="comp-mid">📊</div>
-            <div class="comp-right">ANÁLISIS ESTADÍSTICO</div>
-        </div>
-        <div class="comparison-row">
-            <div class="comp-left">Intermediarios externos</div>
-            <div class="comp-mid">⚽</div>
-            <div class="comp-right">JUGADOR NCAA ACTIVO</div>
-        </div>
-        <div class="comparison-row" style="border-bottom:none;">
-            <div class="comp-left">Promesas vagas</div>
-            <div class="comp-mid">🎯</div>
-            <div class="comp-right">PROBABILIDAD CALCULADA</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# --- 4. SECCIÓN EXPERIENCIA ---
+# --- 3. SECCIÓN EXPERIENCIA ---
 st.markdown("<br><br><br>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align:center; margin-bottom:40px;'>LA EXPERIENCIA 360°</h2>", unsafe_allow_html=True)
 col_e1, col_e2, col_e3 = st.columns(3, gap="medium")
@@ -319,12 +267,12 @@ with col_e2:
 with col_e3:
     info_card("🇺🇸", "VISADO F-1", "Gestión integral. Desde el examen TOEFL hasta la entrevista en la embajada. Sin errores burocráticos.")
 
-# --- 5. NUEVA SECCIÓN: PREGUNTAS FRECUENTES (FAQ) ---
+# --- 4. SECCIÓN: PREGUNTAS FRECUENTES (FAQ) ---
 st.markdown("<br><br><br>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align:center; margin-bottom:10px;'>DUDAS COMUNES</h2>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:40px;'>Claridad total antes de empezar.</p>", unsafe_allow_html=True)
 
-c_faq1, c_faq2 = st.columns([1, 2]) # Columna izquierda vacía para centrar o diseño asimétrico
+c_faq1, c_faq2 = st.columns([1, 2])
 with c_faq2:
     # Pregunta 1: Nivel
     with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE PARA CONSEGUIR BECA?"):
