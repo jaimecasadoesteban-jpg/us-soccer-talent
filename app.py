@@ -29,7 +29,7 @@ def show_contact_form():
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
             st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS "DARK ELITE" (CORREGIDO)
+# 3. CSS "DARK ELITE" (IMAGEN DE FONDO)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
@@ -42,7 +42,7 @@ st.markdown("""
     /* FONDO GENERAL */
     .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-    /* --- HERO SECTION CON VIDEO --- */
+    /* --- HERO SECTION CON IMAGEN --- */
     .hero-container {
         position: relative;
         height: 90vh;
@@ -51,24 +51,14 @@ st.markdown("""
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .hero-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        z-index: -1; /* Detrás de todo */
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-        filter: brightness(0.4); /* Oscurecer */
+        /* Imagen de fondo de calidad con superposición oscura */
+        background: linear-gradient(rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.8)), url('https://images.unsplash.com/photo-1522778119026-d647f0596c63?q=80&w=2070&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center center;
     }
 
     .hero-content {
-        z-index: 1; /* Delante del video */
+        z-index: 1;
         text-align: center;
         max-width: 900px;
         padding: 20px;
@@ -112,24 +102,6 @@ st.markdown("""
         box-shadow: 0 0 40px rgba(37, 99, 235, 0.8);
     }
 
-    /* --- LOGOS --- */
-    .logo-strip {
-        display: flex;
-        justify-content: center;
-        gap: 50px;
-        margin-top: 50px;
-        flex-wrap: wrap;
-        z-index: 10;
-        position: relative;
-    }
-    .uni-logo {
-        height: 50px;
-        filter: brightness(0) invert(1);
-        opacity: 0.6;
-        transition: opacity 0.3s;
-    }
-    .uni-logo:hover { opacity: 1; }
-
     /* --- TARJETAS DATOS --- */
     .stat-card {
         background: rgba(15, 23, 42, 0.8);
@@ -171,12 +143,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. HERO SECTION (VÍDEO ARREGLADO) ---
+# --- 1. HERO SECTION (CON IMAGEN DE FONDO) ---
 st.markdown("""
 <div class="hero-container">
-    <video autoplay muted loop playsinline class="hero-video">
-        <source src="https://cdn.coverr.co/videos/coverr-football-stadium-4k-3340/1080p.mp4" type="video/mp4">
-    </video>
     <div class="hero-content">
         <p style="color:#38bdf8; font-weight:800; letter-spacing:4px; margin-bottom:15px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
         <h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>
@@ -188,20 +157,13 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# BOTÓN (Fuera del HTML para interactividad)
 c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
         show_contact_form()
 
-st.markdown("""
-<div class="logo-strip" style="padding-bottom: 50px;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Stanford_Cardinal_logo.svg" class="uni-logo" title="Stanford">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/UCLA_Bruins_script_logo.svg" class="uni-logo" title="UCLA">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/North_Carolina_Tar_Heels_logo.svg" class="uni-logo" title="UNC">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/de/d3/Wake_Forest_University_Athletic_logo.svg" class="uni-logo" title="Wake Forest">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg" class="uni-logo" title="NCAA">
-</div>
-""", unsafe_allow_html=True)
+# (SECCIÓN DE LOGOS ELIMINADA AQUÍ)
 
 # --- 2. SECCIÓN DATOS ---
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -274,36 +236,28 @@ st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:40px;'>Cl
 
 c_faq1, c_faq2 = st.columns([1, 2])
 with c_faq2:
-    # Pregunta 1: Nivel
     with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE PARA CONSEGUIR BECA?"):
         st.write("""
         No necesitas ser profesional, pero sí destacar en tu liga. Las universidades buscan perfiles titulares en **División de Honor, Liga Nacional o Preferente Senior**.
-        
         Nuestro algoritmo analiza tus minutos jugados y métricas clave. Si estás en un equipo de menor categoría pero tienes estadísticas "fuera de serie" (ej. +20 goles), también hay opciones.
         """)
     
-    # Pregunta 2: Dinero
     with st.expander("💸 ¿LA BECA CUBRE EL 100% DE LOS GASTOS?"):
         st.write("""
         Es posible (Full Ride), pero reservado para el top 1% de los talentos.
-        
         **La realidad:** La mayoría de jugadores obtienen un **paquete mixto**. Sumamos tu Beca Deportiva + Beca Académica (por tus notas de Bachillerato) + Ayuda Internacional. 
         Nuestro trabajo es maximizar esa suma para que tu coste final sea mínimo.
         """)
 
-    # Pregunta 3: Académico
     with st.expander("🎓 ¿QUÉ PASA SI MI INGLÉS NO ES PERFECTO?"):
         st.write("""
         No te preocupes. Necesitas aprobar el examen **TOEFL** y el **SAT**, pero las universidades tienen baremos flexibles para atletas.
-        
         Nosotros te indicamos la puntuación exacta que necesitas según la división (NCAA D1, D2 o NAIA) y te ayudamos a preparar el papeleo.
         """)
 
-    # Pregunta 4: Lesiones
     with st.expander("🏥 ¿QUÉ SUCEDE SI ME LESIONO ALLÍ?"):
         st.write("""
         En la NCAA, los atletas tienen acceso a los mejores seguros médicos y fisioterapia de élite diaria **sin coste extra**.
-        
         Además, si la lesión es grave, la mayoría de universidades respetan tu beca académica para que puedas terminar la carrera aunque no puedas jugar esa temporada.
         """)
 
