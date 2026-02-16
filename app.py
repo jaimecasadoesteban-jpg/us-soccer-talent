@@ -10,233 +10,230 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. CSS PERSONALIZADO AVANZADO (ESTÉTICA NEON/FUT)
+# 2. CSS "MIDNIGHT ELITE" (PREMIUM & TECH)
 st.markdown("""
     <style>
-    /* Importamos una fuente potente de Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap');
 
-    /* Fondo general con degradado sutil */
+    /* FONDO CON PROFUNDIDAD (NO NEGRO PLANO) */
     .stApp {
-        background: linear-gradient(to bottom right, #000000, #0e1117, #1c1c1c);
-        color: #ffffff;
+        background: radial-gradient(circle at 50% 10%, #1e293b, #0f172a, #020617);
+        color: #f8fafc;
         font-family: 'Montserrat', sans-serif;
     }
 
-    /* Títulos agresivos con efecto neón */
+    /* TÍTULOS */
     h1 {
-        font-family: 'Montserrat', sans-serif;
         font-weight: 900 !important;
         text-transform: uppercase;
-        letter-spacing: -1px;
-        color: #ffffff !important;
-        text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; /* Glow verde */
-        font-size: 3rem !important;
+        background: -webkit-linear-gradient(0deg, #38bdf8, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 3.8rem !important;
+        letter-spacing: -2px;
+        margin-bottom: 0px;
     }
     
-    h2, h3 {
-        font-family: 'Montserrat', sans-serif;
+    h2 {
         font-weight: 700 !important;
-        text-transform: uppercase;
-        color: #00ff41 !important; /* Texto verde */
+        color: #ffffff !important;
+        font-size: 2.2rem !important;
+        border-left: 5px solid #38bdf8; /* Barra azul a la izquierda */
+        padding-left: 15px;
+        margin-top: 40px;
     }
 
-    /* Subtítulos más limpios */
-    .stMarkdown p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        color: #d1d5db; /* Gris claro para leer mejor */
+    h3 {
+        color: #94a3b8 !important;
+        font-weight: 500 !important;
     }
 
-    /* Botones estilo "Cyberpunk" */
+    /* TEXTO NORMAL */
+    p, li, .stMarkdown {
+        font-size: 1.15rem;
+        color: #cbd5e1; /* Gris azulado muy claro */
+        line-height: 1.7;
+    }
+
+    /* BOTONES GRADIENTE AZUL/VIOLETA */
     .stButton>button {
-        background: linear-gradient(45deg, #00ff41, #00c232);
-        color: #000000;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 900;
-        border-radius: 4px;
+        background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+        color: white;
+        font-weight: 700;
         border: none;
-        padding: 15px 40px;
+        border-radius: 8px;
+        padding: 18px 40px;
         text-transform: uppercase;
-        box-shadow: 0 4px 15px rgba(0, 255, 65, 0.4); /* Sombra verde */
+        letter-spacing: 1px;
+        box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
         transition: all 0.3s ease;
+        width: 100%;
     }
     .stButton>button:hover {
-        transform: scale(1.05); /* Crece un poco al pasar el ratón */
-        box-shadow: 0 6px 20px rgba(0, 255, 65, 0.6);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.7);
     }
 
-    /* Tarjetas de métricas estilo FUT */
+    /* TARJETAS DE MÉTRICAS (GLASSMORPHISM) */
     .metric-card {
-        background: linear-gradient(135deg, #1f2937, #111827);
-        padding: 25px;
-        border-radius: 12px;
-        border: 1px solid #374151;
-        border-left: 5px solid #00ff41;
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         text-align: center;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s;
+        transition: all 0.3s;
     }
     .metric-card:hover {
-         transform: translateY(-5px); /* Se levanta al pasar el ratón */
-         border-color: #00ff41;
-         box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        border-color: #38bdf8;
+        transform: translateY(-5px);
+        background: rgba(30, 41, 59, 0.9);
     }
     .metric-card h1 {
-        font-size: 2rem !important;
-        margin-bottom: 0px;
-        text-shadow: none; /* Quitamos el neón de los textos pequeños de las tarjetas */
-        color: #ffffff !important;
+        font-size: 1.8rem !important;
+        background: none;
+        -webkit-text-fill-color: white;
+        margin-bottom: 5px;
+        text-shadow: none;
     }
     .metric-card p {
-        color: #00ff41;
+        color: #38bdf8; /* Cian */
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
         font-weight: 700;
-        letter-spacing: 1px;
-        font-size: 0.9rem;
     }
 
-    /* Inputs del formulario más modernos */
+    /* INPUTS FORMULARIO */
     .stTextInput>div>div>input, .stSelectbox>div>div>div {
-        background-color: #111827;
+        background-color: rgba(15, 23, 42, 0.6);
         color: white;
-        border: 1px solid #374151;
-        border-radius: 4px;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        height: 50px;
     }
     .stTextInput>div>div>input:focus {
-        border-color: #00ff41;
-        box-shadow: 0 0 5px #00ff41;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
     }
-    
-    /* Ajuste para la imagen principal */
-    .hero-image {
-        border-radius: 12px;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-        border: 2px solid #374151;
+
+    /* QUITAMOS EL MARGEN SUPERIOR MOLESTO */
+    .block-container {
+        padding-top: 2rem;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- SECCIÓN 1: HERO (IMPACTO VISUAL MEJORADO) ---
-col1, col2 = st.columns([1.2, 1], gap="large") # Un poco más de espacio para el texto
+# --- SECCIÓN 1: HERO (IMPACTO) ---
+c_hero1, c_hero2 = st.columns([1.3, 1], gap="large")
 
-with col1:
-    # Usamos HTML directo para el título principal para control total del estilo
-    st.markdown('<h1>TU TALENTO EN ESPAÑA.<br><span style="color:#00ff41;">TU FUTURO EN USA.</span></h1>', unsafe_allow_html=True)
+with c_hero1:
+    st.markdown('<p style="color:#38bdf8; font-weight:700; letter-spacing:2px; margin-bottom:0;">US SOCCER TALENT & STRATEGY</p>', unsafe_allow_html=True)
+    st.markdown("<h1>TU TALENTO EN ESPAÑA<br>TU FUTURO EN USA</h1>", unsafe_allow_html=True)
     st.write("""
-    ### US SOCCER TALENT & STRATEGY
+    La primera agencia impulsada por **Business Analytics** y experiencia real en NCAA D1.
     
-    Olvídate de los intermediarios tradicionales. Somos la primera agencia impulsada por **Business Analytics** e **Inteligencia Artificial**.
-    
-    Yo juego en la NCAA D1 ahora mismo. Sé lo que buscan. Te analizo con datos reales y te conecto directamente. Sin humo.
+    Sin intermediarios opacos. Soy Jaime, juego allí y estudio los datos. Te conecto con universidades americanas basándome en tu rendimiento real, no en promesas.
     """)
-    st.write("") # Espacio extra
-    st.button("🚀 QUIERO MI ANÁLISIS GRATUITO")
+    st.write("")
+    st.button("🚀 INICIAR MI ANÁLISIS")
 
-with col2:
-    # He cambiado la imagen por una más dramática y le he añadido una clase CSS
-    st.markdown('<img src="https://images.unsplash.com/photo-1628891890467-b79f2c8ba9dc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="hero-image" style="width:100%;">', unsafe_allow_html=True)
-    st.caption("Visualiza tu objetivo. URI Soccer Stadium.")
+with c_hero2:
+    # Imagen limpia sin caption falso
+    st.image("https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=2070&auto=format&fit=crop", use_container_width=True)
 
-st.markdown("---")
+st.markdown("<br><br>", unsafe_allow_html=True)
 
-# --- SECCIÓN 2: LA METODOLOGÍA (DATA DRIVEN) ---
-st.header("1. NO ADIVINAMOS. MEDIMOS.")
-st.write("En USA todo son números. Usamos Big Data para comparar tu rendimiento en España con el nivel real de la NCAA.")
+# --- SECCIÓN 2: DATOS (EL CORAZÓN) ---
+st.header("NO ADIVINAMOS. MEDIMOS.")
+st.write("En USA, el presupuesto se asigna por estadísticas. Usamos modelos comparativos para traducir tu juego al estándar americano.")
 
-# Simulación de datos 
-categories = ['Goles/90min', 'Asistencias', 'Robos', 'Duelos Aéreos', 'Progresión de Balón']
+# GRÁFICO MEJORADO (COLORES AZULES)
+categories = ['Goles/90min', 'Asistencias', 'Robos', 'Duelos Aéreos', 'Progresión']
 
 fig = go.Figure()
 
+# Tu perfil (Azul cian brillante)
 fig.add_trace(go.Scatterpolar(
       r=[4.2, 3, 5, 4.5, 3.8],
       theta=categories,
       fill='toself',
-      name='TU PROYECCIÓN (Basada en datos)',
-      line_color='#00ff41',
-      opacity=0.8
+      name='TU PROYECCIÓN',
+      line_color='#38bdf8',
+      fillcolor='rgba(56, 189, 248, 0.3)',
+      marker=dict(size=6)
 ))
+
+# Promedio (Gris/Blanco sutil)
 fig.add_trace(go.Scatterpolar(
       r=[3, 3.5, 2.5, 3, 3],
       theta=categories,
       fill='toself',
-      name='Promedio NCAA D1 (Referencia)',
-      line_color='#ff0055',
-      opacity=0.5
+      name='Promedio NCAA D1',
+      line_color='#94a3b8',
+      fillcolor='rgba(148, 163, 184, 0.1)',
+      line=dict(dash='dot')
 ))
 
 fig.update_layout(
   polar=dict(
-    radialaxis=dict(
-      visible=True,
-      range=[0, 5],
-      gridcolor='#374151', # Color de rejilla más sutil
-      linecolor='#374151',
-      tickfont=dict(color='white')
-    ),
-    angularaxis=dict(
-      tickfont=dict(color='white', size=12, family='Montserrat'),
-      linecolor='#374151'
-    ),
-    bgcolor='rgba(0,0,0,0)' # Fondo transparente para el gráfico
+    radialaxis=dict(visible=True, range=[0, 5], gridcolor='#334155', linecolor='#334155', tickfont=dict(color='#94a3b8')),
+    angularaxis=dict(tickfont=dict(color='white', size=12, family='Montserrat'), linecolor='#334155'),
+    bgcolor='rgba(0,0,0,0)'
   ),
-  paper_bgcolor='rgba(0,0,0,0)', # Fondo transparente para el papel
+  paper_bgcolor='rgba(0,0,0,0)',
   font_color="white",
   showlegend=True,
-  legend=dict(
-      bgcolor='rgba(17, 24, 39, 0.8)',
-      bordercolor='#374151',
-      borderwidth=1
-  ),
-  margin=dict(l=20, r=20, t=20, b=20)
+  legend=dict(orientation="h", yanchor="bottom", y=1.1, xanchor="center", x=0.5), # Leyenda arriba horizontal
+  margin=dict(l=40, r=40, t=40, b=20)
 )
 
-c1, c2 = st.columns([1.5, 1], gap="medium")
-with c1:
+col_graph1, col_graph2 = st.columns([1.5, 1], gap="medium")
+with col_graph1:
     st.plotly_chart(fig, use_container_width=True)
-with c2:
-    st.write("") # Espacio para alinear verticalmente
+with col_graph2:
     st.markdown("""
-    <div style="background-color: #111827; padding: 20px; border-radius: 10px; border: 1px solid #00ff41;">
-        <h3 style="margin-top:0;">¿QUÉ DICE ESTE GRÁFICO?</h3>
-        <p style="color: #d1d5db;">Este no es un gráfico cualquiera. Es tu pasaporte.</p>
-        <p>El área <strong style="color:#00ff41">VERDE NEÓN</strong> es tu dominio. Si tu huella estadística cubre más área que el promedio rojo de la NCAA, sabemos que estás listo.</p>
-        <p>Analizamos métricas avanzadas que los ojeadores tradicionales ignoran.</p>
+    <div style="background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 20px; border-radius: 0 8px 8px 0; margin-top: 40px;">
+        <h3 style="color: white !important; margin-top:0;">TU PASAPORTE VISUAL</h3>
+        <p>Este gráfico es lo que enviamos a los entrenadores. Ignoran los vídeos largos; miran la huella estadística.</p>
+        <p>Si tu área <span style="color:#38bdf8; font-weight:bold;">AZUL</span> cubre el promedio gris, eres un candidato viable para beca completa.</p>
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("---")
+st.markdown("<br><br>", unsafe_allow_html=True)
 
-# --- SECCIÓN 3: LA EXPERIENCIA (TU VIDA EN URI) ---
-st.header("2. VIVE EL SUEÑO AMERICANO")
-st.write("Soy Jaime. Juego y estudio en University of Rhode Island. Esto no es una oficina, es mi vida diaria. Te enseño el camino que yo ya he recorrido.")
+# --- SECCIÓN 3: REALIDAD (URI) ---
+st.header("VIVE EL SUEÑO AMERICANO")
+st.write("University of Rhode Island no es solo mi equipo, es el ejemplo de lo que puedes conseguir. Compaginar estudios de alto nivel con deporte de élite.")
 
-# Métricas rápidas de impacto con estilo mejorado
+# MÉTRICAS ESTILO PREMIUM
 m1, m2, m3, m4 = st.columns(4)
-m1.markdown('<div class="metric-card"><h1>Rhode Island</h1><p>LOCATION (USA)</p></div>', unsafe_allow_html=True)
-m2.markdown('<div class="metric-card"><h1>NCAA D1</h1><p>ELITE COMPETITION</p></div>', unsafe_allow_html=True)
-m3.markdown('<div class="metric-card"><h1>Analytics</h1><p>MY MAJOR & TOOL</p></div>', unsafe_allow_html=True)
-m4.markdown('<div class="metric-card"><h1>Scholarship</h1><p>THE ULTIMATE GOAL</p></div>', unsafe_allow_html=True)
+m1.markdown('<div class="metric-card"><h1>RHODE ISLAND</h1><p>LOCATION</p></div>', unsafe_allow_html=True)
+m2.markdown('<div class="metric-card"><h1>NCAA D1</h1><p>COMPETITION</p></div>', unsafe_allow_html=True)
+m3.markdown('<div class="metric-card"><h1>ANALYTICS</h1><p>MY MAJOR</p></div>', unsafe_allow_html=True)
+m4.markdown('<div class="metric-card"><h1>SCHOLARSHIP</h1><p>THE GOAL</p></div>', unsafe_allow_html=True)
 
-st.markdown("---")
+st.markdown("<br><br>", unsafe_allow_html=True)
 
-# --- SECCIÓN 4: CONTACTO (EMBUDO) ---
-st.header("3. EMPIEZA TU CAMINO")
-st.write("Rellena este formulario. Si tus datos iniciales encajan, agendaremos una videollamada de 5 minutos conmigo.")
+# --- SECCIÓN 4: FORMULARIO ---
+st.header("EMPIEZA TU CAMINO")
+st.write("Completa tu perfil preliminar. Si tus métricas iniciales encajan, agendaremos una llamada estratégica.")
 
-with st.form("contact_form"):
-    st.write("### 📋 DATOS DEL JUGADOR")
-    col_f1, col_f2 = st.columns(2, gap="medium")
-    with col_f1:
-        name = st.text_input("Nombre Completo")
-        team = st.text_input("Equipo Actual y Categoría")
-        stats_link = st.text_input("Enlace a Highlights (YouTube/Hudl)")
-    with col_f2:
-        email = st.text_input("Email")
-        position = st.selectbox("Posición Principal", ["Portero", "Defensa Central", "Lateral", "Mediocentro Defensivo", "Mediocentro Ofensivo", "Extremo", "Delantero Centro"])
-        phone = st.text_input("Teléfono (WhatsApp)")
-    
-    st.write("")
-    submitted = st.form_submit_button("ENVIAR PERFIL PARA ANÁLISIS")
-    if submitted:
-        st.success(f"¡Gracias {name}! Hemos recibido tus datos. Si tu perfil encaja, te contactaré en 48h.")
+with st.container():
+    st.markdown('<div style="background: rgba(15, 23, 42, 0.4); padding: 30px; border-radius: 16px; border: 1px solid #1e293b;">', unsafe_allow_html=True)
+    with st.form("contact_form"):
+        c1, c2 = st.columns(2, gap="medium")
+        with c1:
+            name = st.text_input("Nombre Completo", placeholder="Ej: Juan García")
+            team = st.text_input("Equipo y Categoría", placeholder="Ej: Rayo Majadahonda - Div. Honor")
+            stats = st.text_input("Link a Highlights/Stats", placeholder="Hudl, YouTube o Transfermarkt")
+        with c2:
+            email = st.text_input("Email de contacto")
+            pos = st.selectbox("Posición", ["Portero", "Defensa", "Mediocentro", "Extremo", "Delantero"])
+            phone = st.text_input("WhatsApp", placeholder="+34 600 000 000")
+        
+        st.write("")
+        submit = st.form_submit_button("ENVIAR PERFIL A JAIME")
+        if submit:
+            st.success("Perfil enviado. Analizando datos...")
+    st.markdown('</div>', unsafe_allow_html=True)
