@@ -29,13 +29,28 @@ def show_contact_form():
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
             st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS "PURE DARK" (SIN IMÁGENES)
+# 3. CSS "PURE DARK" (ANCHO TOTAL)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
-    /* RESETEO */
-    .block-container { padding-top: 5rem !important; max-width: 1000px !important; }
+    /* RESETEO Y ANCHO TOTAL */
+    .block-container { 
+        padding-top: 3rem !important; 
+        padding-bottom: 5rem !important; 
+        padding-left: 5rem !important; /* Espacio lateral para que no toque los bordes */
+        padding-right: 5rem !important;
+        max-width: 100% !important; 
+    }
+    
+    /* En móviles reducimos el padding para que no se coma la pantalla */
+    @media (max-width: 768px) {
+        .block-container { 
+            padding-left: 1rem !important; 
+            padding-right: 1rem !important;
+        }
+    }
+
     header { visibility: hidden; }
     footer { visibility: hidden; }
 
@@ -53,14 +68,14 @@ st.markdown("""
         font-weight: 900 !important;
         font-style: italic;
         text-transform: uppercase;
-        font-size: 6rem !important; /* MÁS GRANDE */
+        font-size: 7rem !important; /* AÚN MÁS GRANDE */
         line-height: 0.9 !important;
         background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 20px !important;
         text-align: center;
-        letter-spacing: -2px;
+        letter-spacing: -3px;
     }
     
     h2 {
@@ -71,9 +86,9 @@ st.markdown("""
     
     .subtitle {
         text-align: center;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         color: #94a3b8;
-        max-width: 800px;
+        max-width: 1000px; /* Más ancho para leer mejor */
         margin: 0 auto 50px auto;
         font-family: 'Inter', sans-serif;
         line-height: 1.6;
@@ -84,9 +99,9 @@ st.markdown("""
         background: #38bdf8;
         color: #0f172a;
         border: none;
-        padding: 20px 60px;
+        padding: 22px 70px;
         font-family: 'Kanit', sans-serif;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         font-weight: 900;
         text-transform: uppercase;
         border-radius: 4px; 
@@ -106,41 +121,39 @@ st.markdown("""
         background: rgba(15, 23, 42, 0.5);
         border: 1px solid #1e293b;
         border-left: 4px solid #38bdf8;
-        padding: 30px;
-        margin-bottom: 15px;
-        border-radius: 8px;
+        padding: 40px; /* Más grandes */
+        margin-bottom: 20px;
+        border-radius: 12px;
     }
 
     /* ACORDEÓN FAQ */
     .stExpander {
         border: none !important;
         background-color: transparent !important;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
     .stExpander > details > summary {
         font-family: 'Kanit', sans-serif !important;
-        font-size: 1.2rem !important;
+        font-size: 1.3rem !important;
         color: white !important;
         background-color: rgba(30, 41, 59, 0.5) !important;
         border: 1px solid #1e293b !important;
         border-radius: 8px !important;
-        padding: 25px !important;
+        padding: 30px !important;
     }
     .stExpander > details > div {
         background-color: rgba(15, 23, 42, 0.5) !important;
         color: #cbd5e1 !important;
-        padding: 25px !important;
+        padding: 30px !important;
         border-radius: 0 0 8px 8px;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # --- 1. HERO SECTION (TEXTO PURO) ---
-
-# Título Masivo
+st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("<h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8; -webkit-text-fill-color: #38bdf8;'>TU FUTURO EN USA.</span></h1>", unsafe_allow_html=True)
 
-# Subtítulo
 st.markdown("""
 <div class="subtitle">
     La primera agencia impulsada por <b>Business Analytics</b>. <br>
@@ -155,24 +168,24 @@ with c2:
         show_contact_form()
 
 # --- 2. SECCIÓN DATOS ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align:center; font-size:3.5rem; margin-bottom:10px;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:50px; font-size:1.2rem;'>Tu rendimiento en España traducido al estándar NCAA D1.</p>", unsafe_allow_html=True)
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; font-size:4rem; margin-bottom:10px;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:60px; font-size:1.4rem;'>Tu rendimiento en España traducido al estándar NCAA D1.</p>", unsafe_allow_html=True)
 
 col_d1, col_d2 = st.columns([1, 1.5], gap="large")
 with col_d1:
     st.markdown("""
     <div class="stat-card">
-        <div style="font-family:'Kanit'; font-size:2.5rem; color:#00ff41; line-height:1;">TOP 8%</div>
-        <div style="font-size:0.9rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">DUELOS GANADOS VS LIGA</div>
+        <div style="font-family:'Kanit'; font-size:3rem; color:#00ff41; line-height:1;">TOP 8%</div>
+        <div style="font-size:1rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">DUELOS GANADOS VS LIGA</div>
     </div>
     <div class="stat-card">
-        <div style="font-family:'Kanit'; font-size:2.5rem; color:white; line-height:1;">0.42</div>
-        <div style="font-size:0.9rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">GOLES ESPERADOS (xG) / 90'</div>
+        <div style="font-family:'Kanit'; font-size:3rem; color:white; line-height:1;">0.42</div>
+        <div style="font-size:1rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">GOLES ESPERADOS (xG) / 90'</div>
     </div>
     <div class="stat-card">
-        <div style="font-family:'Kanit'; font-size:2.5rem; color:white; line-height:1;">82%</div>
-        <div style="font-size:0.9rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">PRECISIÓN PASE PROGRESIVO</div>
+        <div style="font-family:'Kanit'; font-size:3rem; color:white; line-height:1;">82%</div>
+        <div style="font-size:1rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">PRECISIÓN PASE PROGRESIVO</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -192,22 +205,22 @@ with col_d2:
       paper_bgcolor='rgba(0,0,0,0)',
       font_color="white",
       showlegend=False,
-      margin=dict(l=20, r=20, t=20, b=20),
-      height=450
+      margin=dict(l=40, r=40, t=40, b=40),
+      height=550 # Gráfico más grande
     )
     st.plotly_chart(fig, use_container_width=True)
 
 # --- 3. SECCIÓN EXPERIENCIA ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align:center; margin-bottom:40px;'>LA EXPERIENCIA 360°</h2>", unsafe_allow_html=True)
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; margin-bottom:50px; font-size:3.5rem;'>LA EXPERIENCIA 360°</h2>", unsafe_allow_html=True)
 col_e1, col_e2, col_e3 = st.columns(3, gap="medium")
 
 def info_card(emoji, title, text):
     st.markdown(f"""
-    <div style="background:rgba(30,41,59,0.5); padding:30px; border-radius:12px; height:280px; border:1px solid #1e293b;">
-        <div style="font-size:2rem; margin-bottom:10px;">{emoji}</div>
-        <h3 style="color:#38bdf8; font-family:'Kanit'; font-size:1.4rem;">{title}</h3>
-        <p style="color:#cbd5e1; font-size:1rem; line-height:1.6;">{text}</p>
+    <div style="background:rgba(30,41,59,0.5); padding:40px; border-radius:12px; height:320px; border:1px solid #1e293b;">
+        <div style="font-size:2.5rem; margin-bottom:15px;">{emoji}</div>
+        <h3 style="color:#38bdf8; font-family:'Kanit'; font-size:1.6rem;">{title}</h3>
+        <p style="color:#cbd5e1; font-size:1.1rem; line-height:1.6;">{text}</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -219,11 +232,11 @@ with col_e3:
     info_card("🇺🇸", "VISADO F-1", "Gestión integral. Desde el examen TOEFL hasta la entrevista en la embajada. Sin errores burocráticos.")
 
 # --- 4. SECCIÓN: PREGUNTAS FRECUENTES (FAQ) ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align:center; margin-bottom:10px;'>DUDAS COMUNES</h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:40px;'>Claridad total antes de empezar.</p>", unsafe_allow_html=True)
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; margin-bottom:10px; font-size:3.5rem;'>DUDAS COMUNES</h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:50px; font-size:1.4rem;'>Claridad total antes de empezar.</p>", unsafe_allow_html=True)
 
-c_faq1, c_faq2 = st.columns([1, 2])
+c_faq1, c_faq2 = st.columns([1, 2], gap="large")
 with c_faq2:
     with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE PARA CONSEGUIR BECA?"):
         st.write("""
@@ -253,8 +266,8 @@ with c_faq2:
 with c_faq1:
     st.markdown("""
     <div style="padding:20px; text-align:right;">
-        <h3 style="color:#38bdf8; font-size:1.5rem;">RESOLVEMOS TU FUTURO</h3>
-        <p style="color:#94a3b8;">
+        <h3 style="color:#38bdf8; font-size:2rem;">RESOLVEMOS TU FUTURO</h3>
+        <p style="color:#94a3b8; font-size:1.2rem;">
             Ir a USA es una inversión de vida. No dejes cabos sueltos.
             <br><br>
             Yo pasé por las mismas dudas que tú hace 2 años.
@@ -263,7 +276,7 @@ with c_faq1:
     """, unsafe_allow_html=True)
 
 # --- FOOTER ---
-st.markdown("<br><br><hr style='border-color:#1e293b'>", unsafe_allow_html=True)
+st.markdown("<br><br><br><br><hr style='border-color:#1e293b'>", unsafe_allow_html=True)
 st.markdown("""
 <div style="text-align:center; padding: 30px;">
     <p style="font-size:1.2rem; color:white; font-family:'Kanit';">US SOCCER TALENT & STRATEGY © 2026</p>
