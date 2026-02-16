@@ -29,70 +29,48 @@ def show_contact_form():
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
             st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS "DARK ELITE" (ESTILO FINAL)
+# 3. CSS "DARK ELITE" (LIMPIO Y SEGURO)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
     /* RESETEO */
-    .block-container { padding: 0 !important; max-width: 100%; }
+    .block-container { padding-top: 2rem !important; max-width: 1200px !important; }
     header { visibility: hidden; }
     footer { visibility: hidden; }
 
     /* FONDO GENERAL */
     .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-    /* --- HERO SECTION --- */
-    .hero-container {
-        position: relative;
-        width: 100%;
-        height: 90vh; /* Altura pantalla completa */
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #000;
-    }
-
-    /* Imagen de fondo (Método infalible) */
-    .hero-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-        filter: brightness(0.3); /* Oscurecer para leer texto */
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2; /* Encima de la imagen */
-        text-align: center;
-        max-width: 900px;
-        padding: 20px;
-    }
-
+    /* TIPOGRAFÍA */
     h1 {
         font-family: 'Kanit', sans-serif;
         font-weight: 900 !important;
         font-style: italic;
         text-transform: uppercase;
-        font-size: 5.5rem !important;
-        line-height: 0.9 !important;
+        font-size: 4.5rem !important; /* Tamaño gigante */
+        line-height: 1 !important;
         color: white;
-        text-shadow: 0 0 40px rgba(0,0,0,1);
-        margin: 0 !important;
+        margin-bottom: 10px !important;
+        text-align: center;
     }
-
+    
     h2 {
         font-family: 'Kanit', sans-serif;
         color: white !important;
         text-transform: uppercase;
     }
+    
+    .subtitle {
+        text-align: center;
+        font-size: 1.4rem;
+        color: #94a3b8;
+        max-width: 800px;
+        margin: 0 auto 30px auto;
+        font-family: 'Inter', sans-serif;
+    }
 
-    /* --- BOTONES --- */
+    /* BOTONES */
     .stButton button {
         background: linear-gradient(90deg, #38bdf8, #2563eb);
         color: white;
@@ -102,26 +80,28 @@ st.markdown("""
         font-size: 1.2rem;
         font-weight: 800;
         text-transform: uppercase;
-        border-radius: 0px; 
-        margin-top: 30px;
+        border-radius: 4px; 
         transition: all 0.3s;
         box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+        display: block;
+        margin: 0 auto; /* Centrado */
     }
     .stButton button:hover {
         transform: scale(1.05);
         box-shadow: 0 0 40px rgba(37, 99, 235, 0.8);
     }
 
-    /* --- TARJETAS DATOS --- */
+    /* TARJETAS DATOS */
     .stat-card {
-        background: rgba(15, 23, 42, 0.8);
+        background: rgba(15, 23, 42, 1);
+        border: 1px solid #1e293b;
         border-left: 4px solid #38bdf8;
         padding: 25px;
         margin-bottom: 15px;
-        border-radius: 0 10px 10px 0;
+        border-radius: 8px;
     }
 
-    /* --- ACORDEÓN FAQ --- */
+    /* ACORDEÓN FAQ */
     .stExpander {
         border: none !important;
         background-color: transparent !important;
@@ -135,48 +115,46 @@ st.markdown("""
         border: 1px solid #1e293b !important;
         border-radius: 8px !important;
         padding: 20px !important;
-        transition: all 0.3s;
-    }
-    .stExpander > details > summary:hover {
-        border-color: #38bdf8 !important;
-        color: #38bdf8 !important;
     }
     .stExpander > details > div {
         background-color: #0f172a !important;
         color: #cbd5e1 !important;
         padding: 20px !important;
-        border-left: 1px solid #1e293b;
-        border-right: 1px solid #1e293b;
-        border-bottom: 1px solid #1e293b;
         border-radius: 0 0 8px 8px;
+    }
+    
+    /* IMAGEN HERO REDONDEADA */
+    img {
+        border-radius: 12px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. HERO SECTION (HTML + IMAGEN DIRECTA) ---
+# --- 1. HERO SECTION (ESTILO APPLE: TEXTO -> IMAGEN) ---
+
+# Títulos (Centrados y Limpios)
+st.markdown("<h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>", unsafe_allow_html=True)
+
 st.markdown("""
-<div class="hero-container">
-    <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c63?q=80&w=2070&auto=format&fit=crop" class="hero-img">
-    
-    <div class="hero-content">
-        <p style="color:#38bdf8; font-weight:800; letter-spacing:4px; margin-bottom:15px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
-        <h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>
-        <p style="font-size: 1.3rem; color: #cbd5e1; margin-top: 30px; text-shadow: 0 2px 4px black; max-width: 800px; margin-left: auto; margin-right: auto;">
-            La primera agencia impulsada por <b>Business Analytics</b>. <br>
-            Sin opiniones subjetivas. Solo datos que convencen a las universidades.
-        </p>
-    </div>
+<div class="subtitle">
+    La primera agencia impulsada por <b>Business Analytics</b>. <br>
+    Sin opiniones subjetivas. Solo datos que convencen a las universidades.
 </div>
 """, unsafe_allow_html=True)
 
-# BOTÓN (Fuera del HTML para interactividad)
+# Imagen Cinemática (Nativa de Streamlit - NO FALLA)
+# Usamos una imagen de estadio nocturno muy profesional
+st.image("https://images.unsplash.com/photo-1522778119026-d647f0596c63?q=80&w=2070&auto=format&fit=crop", use_container_width=True)
+
+# Botón de Acción (Centrado debajo de la imagen)
+st.markdown("<br>", unsafe_allow_html=True)
 c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
         show_contact_form()
 
 # --- 2. SECCIÓN DATOS ---
-st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown("<br><br><br>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align:center; font-size:3.5rem; margin-bottom:10px;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:50px; font-size:1.2rem;'>Tu rendimiento en España traducido al estándar NCAA D1.</p>", unsafe_allow_html=True)
 
@@ -225,7 +203,7 @@ col_e1, col_e2, col_e3 = st.columns(3, gap="medium")
 
 def info_card(emoji, title, text):
     st.markdown(f"""
-    <div style="background:rgba(30,41,59,0.4); padding:30px; border-radius:12px; height:280px; border:1px solid #334155;">
+    <div style="background:rgba(30,41,59,0.4); padding:30px; border-radius:12px; height:280px; border:1px solid #1e293b;">
         <div style="font-size:2rem; margin-bottom:10px;">{emoji}</div>
         <h3 style="color:#38bdf8; font-family:'Kanit'; font-size:1.4rem;">{title}</h3>
         <p style="color:#cbd5e1; font-size:1rem; line-height:1.6;">{text}</p>
@@ -248,13 +226,15 @@ c_faq1, c_faq2 = st.columns([1, 2])
 with c_faq2:
     with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE PARA CONSEGUIR BECA?"):
         st.write("""
-        No necesitas ser profesional, pero sí destacar en tu liga. Las universidades buscan perfiles titulares en **División de Honor, 2RFEF, 3RFEF o Preferente Senior**.
+        No necesitas ser profesional, pero sí destacar en tu liga. Las universidades buscan perfiles titulares en **División de Honor, Liga Nacional o Preferente Senior**.
         Nuestro algoritmo analiza tus minutos jugados y métricas clave. Si estás en un equipo de menor categoría pero tienes estadísticas "fuera de serie" (ej. +20 goles), también hay opciones.
         """)
     
     with st.expander("💸 ¿LA BECA CUBRE EL 100% DE LOS GASTOS?"):
         st.write("""
-        En caso de que obtengas un 100% de la beca, por supuesto. Las becas deportivas dependen de tu nivel futbolístico y de como puedas encajar en el equipo.
+        Es posible (Full Ride), pero reservado para el top 1% de los talentos.
+        **La realidad:** La mayoría de jugadores obtienen un **paquete mixto**. Sumamos tu Beca Deportiva + Beca Académica (por tus notas de Bachillerato) + Ayuda Internacional. 
+        Nuestro trabajo es maximizar esa suma para que tu coste final sea mínimo.
         """)
 
     with st.expander("🎓 ¿QUÉ PASA SI MI INGLÉS NO ES PERFECTO?"):
