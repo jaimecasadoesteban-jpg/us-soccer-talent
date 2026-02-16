@@ -10,55 +10,50 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. LÓGICA DEL POPUP (VENTANA EMERGENTE)
-@st.dialog("🚀 TU PRIMER PASO A USA")
+# 2. LÓGICA POPUP
+@st.dialog("🚀 ANÁLISIS PRELIMINAR")
 def show_contact_form():
-    st.write("Rellena los datos clave. Si encajas en el perfil, agendamos llamada.")
+    st.write("Rellena tus datos. Buscamos perfiles específicos para 2025/26.")
     with st.form("popup_form"):
-        name = st.text_input("Nombre Completo", placeholder="Ej. Jaime Casado")
+        name = st.text_input("Nombre Completo")
         c1, c2 = st.columns(2)
         with c1:
-            team = st.text_input("Equipo Actual")
+            team = st.text_input("Equipo y Categoría")
             position = st.selectbox("Posición", ["Portero", "Defensa", "Medio", "Delantero"])
         with c2:
             email = st.text_input("Email")
             phone = st.text_input("WhatsApp")
         
-        link = st.text_input("Link Highlights (Video/Transfermarkt)")
+        link = st.text_input("Link Highlights (Obligatorio)")
         
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
-            st.success("✅ Datos enviados correctamente.")
+            st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS (ESTÉTICA Y CORRECCIONES)
+# 3. CSS "DARK ELITE"
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
-    /* CORRECCIÓN DE MÁRGENES (CRÍTICO) */
-    .block-container {
-        padding-top: 0rem !important;
-        padding-bottom: 5rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        max-width: 100%;
-    }
-    header {visibility: hidden;}
+    /* RESETEO */
+    .block-container { padding: 0 !important; max-width: 100%; }
+    header { visibility: hidden; }
+    footer { visibility: hidden; }
 
-    /* FONDO GLOBAL */
+    /* FONDO GENERAL */
     .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-    /* ESTILO HERO (PORTADA) */
-    .hero-container {
+    /* --- HERO SECTION --- */
+    .hero-wrapper {
         position: relative;
         width: 100%;
-        height: 85vh; /* Altura fija */
+        height: 90vh;
         overflow: hidden;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: #000; /* Fondo negro si falla video */
+        background: #000;
     }
-    
     .hero-video {
         position: absolute;
         top: 50%;
@@ -69,151 +64,182 @@ st.markdown("""
         height: auto;
         z-index: 1;
         transform: translate(-50%, -50%);
-        opacity: 0.5; /* Oscuridad del video */
+        opacity: 0.4;
         object-fit: cover;
     }
-    
-    .hero-text {
+    .hero-content {
         position: relative;
-        z-index: 2; /* Encima del video */
+        z-index: 10;
         text-align: center;
-        padding: 20px;
         max-width: 900px;
+        padding: 0 20px;
     }
 
-    /* TIPOGRAFÍA */
     h1 {
         font-family: 'Kanit', sans-serif;
         font-weight: 900 !important;
         font-style: italic;
         text-transform: uppercase;
-        font-size: 5rem !important;
+        font-size: 5.5rem !important;
         line-height: 0.9 !important;
         color: white;
-        text-shadow: 0 0 20px rgba(0,0,0,0.8);
-        margin-bottom: 10px !important;
+        text-shadow: 0 0 40px rgba(0,0,0,0.9);
+        margin: 0 !important;
     }
-    
+
     h2 {
         font-family: 'Kanit', sans-serif;
         color: white !important;
         text-transform: uppercase;
     }
 
-    /* BOTÓN */
+    /* --- BOTONES --- */
     .stButton button {
         background: linear-gradient(90deg, #38bdf8, #2563eb);
         color: white;
         border: none;
-        padding: 15px 50px;
+        padding: 18px 50px;
         font-family: 'Kanit', sans-serif;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         font-weight: 800;
         text-transform: uppercase;
-        border-radius: 4px;
-        margin-top: 20px;
-        transition: transform 0.2s;
+        border-radius: 0px; 
+        margin-top: 30px;
+        transition: all 0.3s;
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
     }
     .stButton button:hover {
         transform: scale(1.05);
-        color: white;
+        box-shadow: 0 0 40px rgba(37, 99, 235, 0.8);
     }
 
-    /* TARJETAS IGUALES (CORRECCIÓN TAMAÑO) */
-    .info-card {
-        background: rgba(30, 41, 59, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 30px;
-        border-radius: 12px;
-        height: 320px; /* ALTURA FIJA PARA TODAS */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-    .info-card h3 {
-        color: #38bdf8;
-        font-family: 'Kanit';
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-    }
-
-    /* LOGOS */
-    .logo-row {
+    /* --- LOGOS --- */
+    .logo-strip {
         display: flex;
         justify-content: center;
-        gap: 30px;
-        margin-top: 40px;
-        margin-bottom: 40px;
+        gap: 50px;
+        margin-top: 50px;
         flex-wrap: wrap;
+        z-index: 10;
+        position: relative;
     }
-    .logo-img {
-        height: 45px;
-        filter: grayscale(100%) brightness(200%);
-        opacity: 0.7;
+    .uni-logo {
+        height: 50px;
+        filter: brightness(0) invert(1);
+        opacity: 0.6;
+        transition: opacity 0.3s;
+    }
+    .uni-logo:hover { opacity: 1; }
+
+    /* --- TARJETAS DATOS --- */
+    .stat-card {
+        background: rgba(15, 23, 42, 0.8);
+        border-left: 4px solid #38bdf8;
+        padding: 25px;
+        margin-bottom: 15px;
+        border-radius: 0 10px 10px 0;
+    }
+
+    /* --- COMPARATIVA --- */
+    .comparison-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 1px solid #334155;
+        align-items: center;
+    }
+    .comp-left { color: #94a3b8; width: 40%; font-size: 0.9rem; }
+    .comp-mid { color: white; width: 20%; font-weight: bold; text-align: center; font-family: 'Kanit'; font-size: 1.2rem; }
+    .comp-right { color: #38bdf8; width: 40%; text-align: right; font-weight: bold; font-size: 1.1rem; }
+
+    /* --- ACORDEÓN FAQ (Nuevo Estilo) --- */
+    .stExpander {
+        border: none !important;
+        background-color: transparent !important;
+        margin-bottom: 10px;
+    }
+    .stExpander > details > summary {
+        font-family: 'Kanit', sans-serif !important;
+        font-size: 1.2rem !important;
+        color: white !important;
+        background-color: #0f172a !important;
+        border: 1px solid #1e293b !important;
+        border-radius: 8px !important;
+        padding: 20px !important;
+        transition: all 0.3s;
+    }
+    .stExpander > details > summary:hover {
+        border-color: #38bdf8 !important;
+        color: #38bdf8 !important;
+    }
+    .stExpander > details > div {
+        background-color: #0f172a !important;
+        color: #cbd5e1 !important;
+        padding: 20px !important;
+        border-left: 1px solid #1e293b;
+        border-right: 1px solid #1e293b;
+        border-bottom: 1px solid #1e293b;
+        border-radius: 0 0 8px 8px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 4. HERO SECTION (PORTADA) ---
-# Inyectamos HTML con cuidado extremo
+# --- 1. HERO SECTION ---
 st.markdown("""
-<div class="hero-container">
-    <video autoplay muted loop playsinline class="hero-video">
-        <source src="https://videos.pexels.com/video-files/3195239/3195239-uhd_2560_1440_25fps.mp4" type="video/mp4">
+<div class="hero-wrapper">
+    <video autoplay muted loop playsinline class="hero-video" poster="https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg">
+        <source src="https://videos.pexels.com/video-files/855633/855633-hd_1920_1080_30fps.mp4" type="video/mp4">
     </video>
-    <div class="hero-text">
-        <p style="color:#38bdf8; font-weight:800; letter-spacing:3px; margin-bottom:10px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
+
+    <div class="hero-content">
+        <p style="color:#38bdf8; font-weight:800; letter-spacing:4px; margin-bottom:15px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
         <h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>
-        <p style="font-size: 1.2rem; color: #e2e8f0; text-shadow: 0 2px 4px black; margin-top: 20px;">
-            Usamos <b>Business Analytics</b> para validar tu talento ante universidades americanas. 
-            Sin intermediarios opacos. Datos reales, oportunidades reales.
+        <p style="font-size: 1.3rem; color: #cbd5e1; margin-top: 30px; text-shadow: 0 2px 4px black; max-width: 800px; margin-left: auto; margin-right: auto;">
+            La primera agencia impulsada por <b>Business Analytics</b>. <br>
+            Sin opiniones subjetivas. Solo datos que convencen a las universidades.
         </p>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# BOTÓN DE ACCIÓN (Fuera del HTML para que funcione el Python)
 c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
         show_contact_form()
 
-# --- LOGOS ---
 st.markdown("""
-<div class="logo-row">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Stanford_Cardinal_logo.svg" class="logo-img">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/UCLA_Bruins_script_logo.svg" class="logo-img">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/North_Carolina_Tar_Heels_logo.svg" class="logo-img">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/de/d3/Wake_Forest_University_Athletic_logo.svg" class="logo-img">
+<div class="logo-strip" style="padding-bottom: 50px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Stanford_Cardinal_logo.svg" class="uni-logo" title="Stanford">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/UCLA_Bruins_script_logo.svg" class="uni-logo" title="UCLA">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/North_Carolina_Tar_Heels_logo.svg" class="uni-logo" title="UNC">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/de/d3/Wake_Forest_University_Athletic_logo.svg" class="uni-logo" title="Wake Forest">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg" class="uni-logo" title="NCAA">
 </div>
 """, unsafe_allow_html=True)
 
-# --- SECCIÓN DATOS ---
-st.markdown("<br>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align:center; font-size:3rem; margin-bottom:10px;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:40px;'>Tu rendimiento en España traducido al estándar NCAA D1.</p>", unsafe_allow_html=True)
+# --- 2. SECCIÓN DATOS ---
+st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; font-size:3.5rem; margin-bottom:10px;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:50px; font-size:1.2rem;'>Tu rendimiento en España traducido al estándar NCAA D1.</p>", unsafe_allow_html=True)
 
-col_data1, col_data2 = st.columns([1, 1.5], gap="large")
-
-with col_data1:
-    # Tarjetas de datos estilizadas
+col_d1, col_d2 = st.columns([1, 1.5], gap="large")
+with col_d1:
     st.markdown("""
-    <div style="background:rgba(15,23,42,0.5); border-left:4px solid #38bdf8; padding:20px; margin-bottom:15px;">
-        <div style="font-family:'Kanit'; font-size:2rem; color:#00ff41; line-height:1;">TOP 8%</div>
-        <div style="font-size:0.8rem; letter-spacing:1px; color:#cbd5e1;">DUELOS GANADOS VS LIGA</div>
+    <div class="stat-card">
+        <div style="font-family:'Kanit'; font-size:2.5rem; color:#00ff41; line-height:1;">TOP 8%</div>
+        <div style="font-size:0.9rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">DUELOS GANADOS VS LIGA</div>
     </div>
-    <div style="background:rgba(15,23,42,0.5); border-left:4px solid #38bdf8; padding:20px; margin-bottom:15px;">
-        <div style="font-family:'Kanit'; font-size:2rem; color:white; line-height:1;">0.42</div>
-        <div style="font-size:0.8rem; letter-spacing:1px; color:#cbd5e1;">GOLES ESPERADOS (xG) / 90'</div>
+    <div class="stat-card">
+        <div style="font-family:'Kanit'; font-size:2.5rem; color:white; line-height:1;">0.42</div>
+        <div style="font-size:0.9rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">GOLES ESPERADOS (xG) / 90'</div>
     </div>
-    <div style="background:rgba(15,23,42,0.5); border-left:4px solid #38bdf8; padding:20px; margin-bottom:15px;">
-        <div style="font-family:'Kanit'; font-size:2rem; color:white; line-height:1;">82%</div>
-        <div style="font-size:0.8rem; letter-spacing:1px; color:#cbd5e1;">PRECISIÓN PASE PROGRESIVO</div>
+    <div class="stat-card">
+        <div style="font-family:'Kanit'; font-size:2.5rem; color:white; line-height:1;">82%</div>
+        <div style="font-size:0.9rem; letter-spacing:1px; color:#cbd5e1; margin-top:5px;">PRECISIÓN PASE PROGRESIVO</div>
     </div>
     """, unsafe_allow_html=True)
 
-with col_data2:
-    # Gráfico Radar
+with col_d2:
     categories = ['Físico', 'Técnica', 'Táctica', 'Mental', 'Stats']
     fig = go.Figure()
     fig.add_trace(go.Scatterpolar(
@@ -230,46 +256,126 @@ with col_data2:
       font_color="white",
       showlegend=False,
       margin=dict(l=20, r=20, t=20, b=20),
-      height=380
+      height=450
     )
     st.plotly_chart(fig, use_container_width=True)
 
-# --- SECCIÓN EXPERIENCIA (TARJETAS IGUALES) ---
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown("<h2 style='font-size:2.5rem; border-left:5px solid #38bdf8; padding-left:20px;'>LA EXPERIENCIA REAL</h2>", unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
+# --- 3. SECCIÓN COMPARATIVA ---
+st.markdown("<br><br><br>", unsafe_allow_html=True)
+c_comp1, c_comp2 = st.columns([1, 2])
+with c_comp1:
+    st.markdown("<h2 style='font-size:3rem; line-height:1.1; color:white;'>¿POR QUÉ <br><span style='color:#38bdf8'>NOSOTROS?</span></h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#94a3b8; font-size:1.1rem; margin-top:20px;'>El mercado ha cambiado. Las universidades ya no fichan por vídeos de YouTube, fichan por métricas.</p>", unsafe_allow_html=True)
 
-col_exp1, col_exp2, col_exp3 = st.columns(3, gap="medium")
-
-with col_exp1:
+with c_comp2:
     st.markdown("""
-    <div class="info-card">
-        <h3>📚 ACADÉMICO</h3>
-        <p>Acceso a universidades Top 500 mundial. Combinarás clases de alto nivel con entrenamientos diarios. Yo estudio Business Analytics en URI mientras compito.</p>
+    <div style="background: #0f172a; border-radius: 12px; padding: 10px; border: 1px solid #1e293b;">
+        <div class="comparison-row">
+            <div class="comp-left">AGENCIA TRADICIONAL</div>
+            <div class="comp-mid">VS</div>
+            <div class="comp-right">US SOCCER TALENT</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comp-left">"Tengo contactos"</div>
+            <div class="comp-mid">🤝</div>
+            <div class="comp-right">BASE DE DATOS REAL</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comp-left">Vídeo Highlights subjetivo</div>
+            <div class="comp-mid">📊</div>
+            <div class="comp-right">ANÁLISIS ESTADÍSTICO</div>
+        </div>
+        <div class="comparison-row">
+            <div class="comp-left">Intermediarios externos</div>
+            <div class="comp-mid">⚽</div>
+            <div class="comp-right">JUGADOR NCAA ACTIVO</div>
+        </div>
+        <div class="comparison-row" style="border-bottom:none;">
+            <div class="comp-left">Promesas vagas</div>
+            <div class="comp-mid">🎯</div>
+            <div class="comp-right">PROBABILIDAD CALCULADA</div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-with col_exp2:
-    st.markdown("""
-    <div class="info-card">
-        <h3>⚽ DEPORTIVO</h3>
-        <p>Instalaciones profesionales: estadios de hierba natural, gimnasios exclusivos para atletas, fisioterapeutas y material deportivo gratuito (Nike/Adidas).</p>
+# --- 4. SECCIÓN EXPERIENCIA ---
+st.markdown("<br><br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; margin-bottom:40px;'>LA EXPERIENCIA 360°</h2>", unsafe_allow_html=True)
+col_e1, col_e2, col_e3 = st.columns(3, gap="medium")
+
+def info_card(emoji, title, text):
+    st.markdown(f"""
+    <div style="background:rgba(30,41,59,0.4); padding:30px; border-radius:12px; height:280px; border:1px solid #334155;">
+        <div style="font-size:2rem; margin-bottom:10px;">{emoji}</div>
+        <h3 style="color:#38bdf8; font-family:'Kanit'; font-size:1.4rem;">{title}</h3>
+        <p style="color:#cbd5e1; font-size:1rem; line-height:1.6;">{text}</p>
     </div>
     """, unsafe_allow_html=True)
 
-with col_exp3:
+with col_e1:
+    info_card("📚", "ACADÉMICO", "Estudia en universidades Top. Yo compagino Business Analytics con la competición. Tu título valdrá en todo el mundo.")
+with col_e2:
+    info_card("🏟️", "DEPORTIVO", "Instalaciones que superan a muchos equipos profesionales de Europa. Fisios, gimnasios y estadios llenos.")
+with col_e3:
+    info_card("🇺🇸", "VISADO F-1", "Gestión integral. Desde el examen TOEFL hasta la entrevista en la embajada. Sin errores burocráticos.")
+
+# --- 5. NUEVA SECCIÓN: PREGUNTAS FRECUENTES (FAQ) ---
+st.markdown("<br><br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; margin-bottom:10px;'>DUDAS COMUNES</h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:40px;'>Claridad total antes de empezar.</p>", unsafe_allow_html=True)
+
+c_faq1, c_faq2 = st.columns([1, 2]) # Columna izquierda vacía para centrar o diseño asimétrico
+with c_faq2:
+    # Pregunta 1: Nivel
+    with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE PARA CONSEGUIR BECA?"):
+        st.write("""
+        No necesitas ser profesional, pero sí destacar en tu liga. Las universidades buscan perfiles titulares en **División de Honor, Liga Nacional o Preferente Senior**.
+        
+        Nuestro algoritmo analiza tus minutos jugados y métricas clave. Si estás en un equipo de menor categoría pero tienes estadísticas "fuera de serie" (ej. +20 goles), también hay opciones.
+        """)
+    
+    # Pregunta 2: Dinero
+    with st.expander("💸 ¿LA BECA CUBRE EL 100% DE LOS GASTOS?"):
+        st.write("""
+        Es posible (Full Ride), pero reservado para el top 1% de los talentos.
+        
+        **La realidad:** La mayoría de jugadores obtienen un **paquete mixto**. Sumamos tu Beca Deportiva + Beca Académica (por tus notas de Bachillerato) + Ayuda Internacional. 
+        Nuestro trabajo es maximizar esa suma para que tu coste final sea mínimo.
+        """)
+
+    # Pregunta 3: Académico
+    with st.expander("🎓 ¿QUÉ PASA SI MI INGLÉS NO ES PERFECTO?"):
+        st.write("""
+        No te preocupes. Necesitas aprobar el examen **TOEFL** y el **SAT**, pero las universidades tienen baremos flexibles para atletas.
+        
+        Nosotros te indicamos la puntuación exacta que necesitas según la división (NCAA D1, D2 o NAIA) y te ayudamos a preparar el papeleo.
+        """)
+
+    # Pregunta 4: Lesiones
+    with st.expander("🏥 ¿QUÉ SUCEDE SI ME LESIONO ALLÍ?"):
+        st.write("""
+        En la NCAA, los atletas tienen acceso a los mejores seguros médicos y fisioterapia de élite diaria **sin coste extra**.
+        
+        Además, si la lesión es grave, la mayoría de universidades respetan tu beca académica para que puedas terminar la carrera aunque no puedas jugar esa temporada.
+        """)
+
+with c_faq1:
     st.markdown("""
-    <div class="info-card">
-        <h3>🌍 VISADO F-1</h3>
-        <p>Gestionamos todo el proceso burocrático. Preparación para exámenes SAT/TOEFL, traducción de notas y asesoramiento para la entrevista en la embajada.</p>
+    <div style="padding:20px; text-align:right;">
+        <h3 style="color:#38bdf8; font-size:1.5rem;">RESOLVEMOS TU FUTURO</h3>
+        <p style="color:#94a3b8;">
+            Ir a USA es una inversión de vida. No dejes cabos sueltos.
+            <br><br>
+            Yo pasé por las mismas dudas que tú hace 2 años.
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
 # --- FOOTER ---
 st.markdown("<br><br><hr style='border-color:#1e293b'>", unsafe_allow_html=True)
 st.markdown("""
-<div style="text-align:center; color:#64748b; padding: 20px;">
-    <p style="font-size:1rem; color:white;">US SOCCER TALENT & STRATEGY © 2024</p>
-    <p>Dirigida por <b>Jaime Casado</b>. Atleta NCAA D1 & Business Analytics Student.</p>
+<div style="text-align:center; padding: 30px;">
+    <p style="font-size:1.2rem; color:white; font-family:'Kanit';">US SOCCER TALENT & STRATEGY © 2026</p>
+    <p style="color:#64748b;">Dirigida por <b>Jaime Casado</b> | University of Rhode Island</p>
 </div>
 """, unsafe_allow_html=True)
