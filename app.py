@@ -10,58 +10,73 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Inicializar estado del formulario si no existe
-if 'show_form' not in st.session_state:
-    st.session_state.show_form = False
+# 2. DEFINICIÓN DEL POPUP (MODAL)
+# Esto hace que el formulario salte en medio de la pantalla
+@st.dialog("🚀 ANÁLISIS DE PERFIL - PASO 1")
+def show_contact_form():
+    st.write("Rellena tus datos básicos. Si el algoritmo detecta viabilidad, te contactaré en 24h.")
+    with st.form("popup_form"):
+        name = st.text_input("Nombre Completo")
+        col_f1, col_f2 = st.columns(2)
+        with col_f1:
+            team = st.text_input("Equipo y Categoría")
+            position = st.selectbox("Posición", ["Portero", "Defensa", "Medio", "Delantero"])
+        with col_f2:
+            email = st.text_input("Email")
+            phone = st.text_input("WhatsApp")
+        
+        link = st.text_input("Enlace (Transfermarkt / Video)")
+        
+        if st.form_submit_button("ENVIAR DATOS", use_container_width=True):
+            st.success("✅ Recibido. Cierra esta ventana.")
 
-def open_form():
-    st.session_state.show_form = True
-
-# 2. CSS AVANZADO (ESTILO CINE & FUTBOL)
+# 3. CSS ESTRICTO
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,600;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
-    /* CORRECCIONES DE LAYOUT */
-    .block-container { padding-top: 0rem !important; padding-bottom: 5rem !important; max-width: 100%; }
-    header { visibility: hidden; } /* Ocultar barra superior de Streamlit */
-    
-    /* FONDO OSCURO GLOBAL */
+    /* Ocultar elementos sobrantes */
+    header {visibility: hidden;}
+    .block-container {padding-top: 0rem !important; padding-bottom: 5rem !important; max-width: 100%;}
+
+    /* Fondo */
     .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-    /* ESTILO DEL VIDEO HERO */
-    .hero-container {
+    /* CONTENEDOR VIDEO Y TEXTO */
+    .hero-wrapper {
         position: relative;
+        height: 90vh; /* Altura pantalla completa */
         width: 100%;
-        height: 85vh; /* Ocupa casi toda la pantalla */
         overflow: hidden;
         display: flex;
-        align-items: center;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
         text-align: center;
     }
-    
+
+    /* VIDEO DE FONDO */
     .hero-video {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
         z-index: 0;
-        opacity: 0.4; /* Oscurecer vídeo */
-        filter: grayscale(30%) contrast(1.2);
-    }
-    
-    .hero-content {
-        position: relative;
-        z-index: 1;
-        max-width: 900px;
-        padding: 20px;
-        background: radial-gradient(circle, rgba(2,6,23,0.8) 0%, rgba(2,6,23,0) 70%);
+        transform: translate(-50%, -50%);
+        filter: brightness(0.3); /* Oscurecer para leer texto */
     }
 
-    /* TIPOGRAFÍA HERO */
+    /* CONTENIDO SOBRE EL VIDEO */
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1000px;
+        padding: 20px;
+    }
+
     h1 {
         font-family: 'Kanit', sans-serif;
         font-weight: 900 !important;
@@ -69,169 +84,118 @@ st.markdown("""
         text-transform: uppercase;
         font-size: 5rem !important;
         line-height: 0.9 !important;
-        text-shadow: 0 0 40px rgba(56, 189, 248, 0.3);
+        color: white;
+        text-shadow: 0 0 30px rgba(0,0,0,0.8);
         margin-bottom: 20px !important;
     }
-    
+
     .hero-subtitle {
-        font-size: 1.4rem;
-        color: #cbd5e1;
-        margin-bottom: 40px;
-        font-weight: 300;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        font-size: 1.3rem;
+        color: #e2e8f0;
+        margin-bottom: 30px;
+        text-shadow: 0 2px 4px black;
     }
 
-    /* LOGOS BAR */
-    .logo-bar {
+    /* LOGOS */
+    .logo-container {
         display: flex;
         justify-content: center;
-        gap: 50px;
-        padding: 30px 0;
-        background: #0f172a;
-        border-bottom: 1px solid #1e293b;
-        margin-bottom: 50px;
+        gap: 40px;
+        margin-top: 30px;
         flex-wrap: wrap;
     }
-    .uni-logo { height: 40px; opacity: 0.6; filter: grayscale(100%); transition: all 0.3s; }
-    .uni-logo:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
+    .uni-logo { height: 50px; opacity: 0.7; filter: grayscale(100%) brightness(200%); }
 
-    /* BOTÓN CTA PRINCIPAL */
+    /* ESTILO BOTÓN */
     .stButton button {
         background: linear-gradient(90deg, #0ea5e9, #2563eb);
         color: white;
         border: none;
-        padding: 20px 60px;
+        padding: 15px 40px;
         font-family: 'Kanit', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 800;
+        font-size: 1.2rem;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        border-radius: 0px; /* Estilo Nike */
-        clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
-        transition: all 0.3s;
-        box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+        font-weight: 700;
+        border-radius: 4px;
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
     }
-    .stButton button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 40px rgba(14, 165, 233, 0.8);
-    }
-
-    /* TARJETAS DE DATOS (NUEVAS) */
-    .stat-box {
+    
+    /* CAJAS EXPERIENCIA Y DATOS */
+    .glass-card {
         background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 12px;
+        height: 100%;
+    }
+    .stat-box {
+        background: rgba(15, 23, 42, 0.6);
         border-left: 4px solid #38bdf8;
         padding: 20px;
-        border-radius: 0 8px 8px 0;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
-    .stat-value { font-family: 'Kanit'; font-size: 2rem; color: white; line-height: 1; }
-    .stat-label { font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-
-    /* FORMULARIO FLOTANTE */
-    .form-container {
-        background: #1e293b;
-        padding: 40px;
-        border-radius: 12px;
-        border: 2px solid #38bdf8;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        margin-top: 20px;
-        animation: fadeIn 0.5s ease-in-out;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. HERO SECTION CON VIDEO ---
-# Usamos HTML puro para el video de fondo y el contenido superpuesto
+# --- HERO SECTION (HTML PURO PARA CONTROLAR VIDEO) ---
 st.markdown("""
-<div class="hero-container">
+<div class="hero-wrapper">
     <video autoplay muted loop playsinline class="hero-video">
-        <source src="https://videos.pexels.com/video-files/5436660/5436660-uhd_2560_1440_24fps.mp4" type="video/mp4">
+        <source src="https://videos.pexels.com/video-files/3195239/3195239-uhd_2560_1440_25fps.mp4" type="video/mp4">
     </video>
+
     <div class="hero-content">
-        <p style="color:#38bdf8; font-weight:800; letter-spacing:4px; margin-bottom:10px;">US SOCCER TALENT & STRATEGY</p>
-        <h1>TU TALENTO ES EL DATO.<br>USA ES EL DESTINO.</h1>
+        <p style="color:#38bdf8; font-weight:800; letter-spacing:3px; margin-bottom:10px; font-family:Kanit;">US SOCCER TALENT & STRATEGY</p>
+        <h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>
         <p class="hero-subtitle">
-            Usamos Business Analytics para validar tu rendimiento. No vendemos humo, vendemos 
-            evidencia estadística a las universidades que buscan ganadores.
+            Usamos <b>Business Analytics</b> para validar tu talento ante universidades americanas. 
+            Sin intermediarios opacos. Datos reales, oportunidades reales.
         </p>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- 2. BARRA DE LOGOS (UNIVERSIDADES) ---
+# --- BOTÓN FLOTANTE (FUERA DEL HTML PARA USAR PYTHON) ---
+# Usamos columnas para centrar el botón justo debajo del texto visualmente
+c1, c2, c3 = st.columns([1, 1, 1])
+with c2:
+    if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
+        show_contact_form()
+
+# --- LOGOS (DEBAJO DEL BOTÓN) ---
 st.markdown("""
-<div class="logo-bar">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Stanford_Cardinal_logo.svg/1200px-Stanford_Cardinal_logo.svg.png" class="uni-logo" title="Stanford">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/UCLA_Bruins_script_logo.svg/2560px-UCLA_Bruins_script_logo.svg.png" class="uni-logo" title="UCLA">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/North_Carolina_Tar_Heels_logo.svg/1200px-North_Carolina_Tar_Heels_logo.svg.png" class="uni-logo" title="UNC">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Wake_Forest_University_Athletic_logo.svg/1200px-Wake_Forest_University_Athletic_logo.svg.png" class="uni-logo" title="Wake Forest">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/NCAA_logo.svg/1024px-NCAA_logo.svg.png" class="uni-logo" title="NCAA">
+<div class="logo-container" style="padding-bottom: 50px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Stanford_Cardinal_logo.svg" class="uni-logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/UCLA_Bruins_script_logo.svg" class="uni-logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/North_Carolina_Tar_Heels_logo.svg" class="uni-logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/de/d3/Wake_Forest_University_Athletic_logo.svg" class="uni-logo">
 </div>
 """, unsafe_allow_html=True)
 
-# --- 3. BOTÓN DE ACCIÓN (Lógica de Python) ---
-# Creamos tres columnas para centrar el botón gigante
-col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
-
-with col_btn2:
-    if st.button("🚀 DESBLOQUEAR MI FUTURO EN USA", type="primary", use_container_width=True):
-        open_form()
-
-# --- 4. ZONA DEL FORMULARIO (APARECE SOLO AL CLICAR) ---
-if st.session_state.show_form:
-    st.markdown("<div class='form-container'>", unsafe_allow_html=True)
-    st.markdown("<h2 style='text-align:center; color:#38bdf8;'>FICHA TÉCNICA INICIAL</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center;'>Rellena tus datos. Si el algoritmo detecta potencial, agendamos llamada.</p>", unsafe_allow_html=True)
-    
-    with st.form("contact_form"):
-        c1, c2 = st.columns(2)
-        with c1:
-            st.text_input("NOMBRE COMPLETO")
-            st.text_input("EQUIPO ACTUAL Y CATEGORÍA")
-            st.selectbox("POSICIÓN", ["Portero", "Defensa", "Medio", "Delantero"])
-        with c2:
-            st.text_input("EMAIL")
-            st.text_input("WHATSAPP")
-            st.text_input("LINK TRANSFERMARKT / VIDEO")
-        
-        st.write("")
-        submit = st.form_submit_button("ENVIAR DATOS PARA ANÁLISIS")
-        if submit:
-            st.success("✅ Datos recibidos. Iniciando análisis de viabilidad...")
-    
-    st.markdown("</div>", unsafe_allow_html=True)
-
+# --- SECCIÓN DATOS ---
 st.markdown("<br><br>", unsafe_allow_html=True)
-
-# --- 5. SECCIÓN DATOS (NUEVA: SIN TABLA) ---
-st.markdown("<h2 style='text-align:center; font-family:Kanit; font-size:3rem;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; font-family:Kanit; color:white; font-size:3rem;'>NO ADIVINAMOS. <span style='color:#38bdf8'>MEDIMOS.</span></h2>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; margin-bottom:40px;'>Tu rendimiento en España traducido al estándar NCAA D1.</p>", unsafe_allow_html=True)
 
 col_d1, col_d2 = st.columns([1, 1.5], gap="large")
 
 with col_d1:
-    # Tarjetas de Estadísticas (Estilo Dashboard)
     st.markdown("""
     <div class="stat-box">
-        <div class="stat-value" style="color:#00ff41;">TOP 8%</div>
-        <div class="stat-label">DUELOS GANADOS VS LIGA</div>
+        <div style="font-family:'Kanit'; font-size:2.5rem; color:#00ff41; line-height:1;">TOP 8%</div>
+        <div style="font-size:0.9rem; color:#94a3b8; letter-spacing:1px;">DUELOS GANADOS VS LIGA</div>
     </div>
     <div class="stat-box">
-        <div class="stat-value">0.42</div>
-        <div class="stat-label">GOLES ESPERADOS (xG) / 90'</div>
+        <div style="font-family:'Kanit'; font-size:2.5rem; color:white; line-height:1;">0.42</div>
+        <div style="font-size:0.9rem; color:#94a3b8; letter-spacing:1px;">GOLES ESPERADOS (xG) / 90'</div>
     </div>
     <div class="stat-box">
-        <div class="stat-value">82%</div>
-        <div class="stat-label">PRECISIÓN PASE PROGRESIVO</div>
+        <div style="font-family:'Kanit'; font-size:2.5rem; color:white; line-height:1;">82%</div>
+        <div style="font-size:0.9rem; color:#94a3b8; letter-spacing:1px;">PRECISIÓN PASE PROGRESIVO</div>
     </div>
-    <p style="font-size:0.9rem; color:#64748b; margin-top:20px;">
-        *Ejemplo de análisis real. Comparamos tus métricas con la base de datos de 200 universidades.
-    </p>
     """, unsafe_allow_html=True)
 
 with col_d2:
-    # Gráfico Radar Premium
     categories = ['Físico', 'Técnica', 'Táctica', 'Mental', 'Stats']
     fig = go.Figure()
     fig.add_trace(go.Scatterpolar(
@@ -248,15 +212,44 @@ with col_d2:
       font_color="white",
       showlegend=False,
       margin=dict(l=20, r=20, t=10, b=10),
-      height=350
+      height=400
     )
     st.plotly_chart(fig, use_container_width=True)
 
-# --- 6. FOOTER (FIRMA) ---
-st.markdown("<hr style='border-color:#1e293b'>", unsafe_allow_html=True)
+# --- SECCIÓN EXPERIENCIA REAL (RESTAURADA) ---
+st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown("<h2 style='font-family:Kanit; color:white; font-size:2.5rem; border-left:5px solid #38bdf8; padding-left:20px;'>LA EXPERIENCIA REAL</h2>", unsafe_allow_html=True)
+
+col_exp1, col_exp2, col_exp3 = st.columns(3, gap="medium")
+
+with col_exp1:
+    st.markdown("""
+    <div class="glass-card">
+        <h3 style="color:#38bdf8">📚 ACADÉMICO</h3>
+        <p>Estudia en universidades Top 500 mundial. Yo estudio Business Analytics mientras compito al máximo nivel.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_exp2:
+    st.markdown("""
+    <div class="glass-card">
+        <h3 style="color:#38bdf8">⚽ DEPORTIVO</h3>
+        <p>Instalaciones de nivel profesional. Fisioterapeutas, gimnasios exclusivos y estadios llenos.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_exp3:
+    st.markdown("""
+    <div class="glass-card">
+        <h3 style="color:#38bdf8">🌍 VISADO F-1</h3>
+        <p>Gestionamos la burocracia integral. Desde el examen TOEFL hasta la entrevista en la embajada.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# --- FOOTER ---
+st.markdown("<br><br><hr style='border-color:#1e293b'>", unsafe_allow_html=True)
 st.markdown("""
 <div style="text-align:center; color:#64748b; padding: 20px;">
-    <p style="font-size:0.9rem;">US SOCCER TALENT & STRATEGY © 2024</p>
     <p style="font-size:1.1rem; color:white;">Dirigida por <b>Jaime Casado</b>. Atleta NCAA D1 & Business Analytics Student.</p>
 </div>
 """, unsafe_allow_html=True)
