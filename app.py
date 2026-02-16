@@ -29,30 +29,38 @@ def show_contact_form():
         if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
             st.success("✅ Perfil enviado al equipo de análisis.")
 
-# 3. CSS "DARK ELITE" (LIMPIO Y SEGURO)
+# 3. CSS "PURE DARK" (SIN IMÁGENES)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
     /* RESETEO */
-    .block-container { padding-top: 2rem !important; max-width: 1200px !important; }
+    .block-container { padding-top: 5rem !important; max-width: 1000px !important; }
     header { visibility: hidden; }
     footer { visibility: hidden; }
 
     /* FONDO GENERAL */
-    .stApp { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
+    .stApp { 
+        background-color: #020617; 
+        background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 70%);
+        color: #f8fafc; 
+        font-family: 'Inter', sans-serif; 
+    }
 
-    /* TIPOGRAFÍA */
+    /* TIPOGRAFÍA HERO */
     h1 {
         font-family: 'Kanit', sans-serif;
         font-weight: 900 !important;
         font-style: italic;
         text-transform: uppercase;
-        font-size: 4.5rem !important; /* Tamaño gigante */
-        line-height: 1 !important;
-        color: white;
-        margin-bottom: 10px !important;
+        font-size: 6rem !important; /* MÁS GRANDE */
+        line-height: 0.9 !important;
+        background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px !important;
         text-align: center;
+        letter-spacing: -2px;
     }
     
     h2 {
@@ -63,40 +71,42 @@ st.markdown("""
     
     .subtitle {
         text-align: center;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         color: #94a3b8;
         max-width: 800px;
-        margin: 0 auto 30px auto;
+        margin: 0 auto 50px auto;
         font-family: 'Inter', sans-serif;
+        line-height: 1.6;
     }
 
-    /* BOTONES */
+    /* BOTÓN CENTRAL */
     .stButton button {
-        background: linear-gradient(90deg, #38bdf8, #2563eb);
-        color: white;
+        background: #38bdf8;
+        color: #0f172a;
         border: none;
-        padding: 18px 50px;
+        padding: 20px 60px;
         font-family: 'Kanit', sans-serif;
-        font-size: 1.2rem;
-        font-weight: 800;
+        font-size: 1.4rem;
+        font-weight: 900;
         text-transform: uppercase;
         border-radius: 4px; 
         transition: all 0.3s;
-        box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+        box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
         display: block;
-        margin: 0 auto; /* Centrado */
+        margin: 0 auto;
     }
     .stButton button:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 40px rgba(37, 99, 235, 0.8);
+        box-shadow: 0 0 50px rgba(56, 189, 248, 0.7);
+        background: white;
     }
 
     /* TARJETAS DATOS */
     .stat-card {
-        background: rgba(15, 23, 42, 1);
+        background: rgba(15, 23, 42, 0.5);
         border: 1px solid #1e293b;
         border-left: 4px solid #38bdf8;
-        padding: 25px;
+        padding: 30px;
         margin-bottom: 15px;
         border-radius: 8px;
     }
@@ -111,30 +121,26 @@ st.markdown("""
         font-family: 'Kanit', sans-serif !important;
         font-size: 1.2rem !important;
         color: white !important;
-        background-color: #0f172a !important;
+        background-color: rgba(30, 41, 59, 0.5) !important;
         border: 1px solid #1e293b !important;
         border-radius: 8px !important;
-        padding: 20px !important;
+        padding: 25px !important;
     }
     .stExpander > details > div {
-        background-color: #0f172a !important;
+        background-color: rgba(15, 23, 42, 0.5) !important;
         color: #cbd5e1 !important;
-        padding: 20px !important;
+        padding: 25px !important;
         border-radius: 0 0 8px 8px;
-    }
-    
-    /* IMAGEN HERO REDONDEADA */
-    img {
-        border-radius: 12px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. HERO SECTION (ESTILO APPLE: TEXTO -> IMAGEN) ---
+# --- 1. HERO SECTION (TEXTO PURO) ---
 
-# Títulos (Centrados y Limpios)
-st.markdown("<h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8'>TU FUTURO EN USA.</span></h1>", unsafe_allow_html=True)
+# Título Masivo
+st.markdown("<h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8; -webkit-text-fill-color: #38bdf8;'>TU FUTURO EN USA.</span></h1>", unsafe_allow_html=True)
 
+# Subtítulo
 st.markdown("""
 <div class="subtitle">
     La primera agencia impulsada por <b>Business Analytics</b>. <br>
@@ -142,12 +148,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Imagen Cinemática (Nativa de Streamlit - NO FALLA)
-# Usamos una imagen de estadio nocturno muy profesional
-st.image("https://images.unsplash.com/photo-1522778119026-d647f0596c63?q=80&w=2070&auto=format&fit=crop", use_container_width=True)
-
-# Botón de Acción (Centrado debajo de la imagen)
-st.markdown("<br>", unsafe_allow_html=True)
+# Botón
 c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
@@ -203,7 +204,7 @@ col_e1, col_e2, col_e3 = st.columns(3, gap="medium")
 
 def info_card(emoji, title, text):
     st.markdown(f"""
-    <div style="background:rgba(30,41,59,0.4); padding:30px; border-radius:12px; height:280px; border:1px solid #1e293b;">
+    <div style="background:rgba(30,41,59,0.5); padding:30px; border-radius:12px; height:280px; border:1px solid #1e293b;">
         <div style="font-size:2rem; margin-bottom:10px;">{emoji}</div>
         <h3 style="color:#38bdf8; font-family:'Kanit'; font-size:1.4rem;">{title}</h3>
         <p style="color:#cbd5e1; font-size:1rem; line-height:1.6;">{text}</p>
