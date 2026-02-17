@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import requests  # <--- NUEVA HERRAMIENTA IMPORTADA
 
 # 1. CONFIGURACIÓN DE PÁGINA
 st.set_page_config(
@@ -10,10 +11,38 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. LÓGICA POPUP
+# --- CONFIGURACIÓN DEL EMAIL ---
+# 🔴 ¡CAMBIA ESTO POR TU EMAIL REAL! 🔴
+DESTINATARIO_EMAIL = "pon_tu_email_aqui@ejemplo.com"
+
+def enviar_datos_a_email(nombre, equipo, posicion, email_jugador, whatsapp, link):
+    """Función que envía los datos a tu correo usando FormSubmit"""
+    url = f"https://formsubmit.co/{DESTINATARIO_EMAIL}"
+    
+    # Datos que te llegarán
+    payload = {
+        "_subject": f"🚀 NUEVO TALENTO: {nombre}",  # Asunto del correo
+        "_captcha": "false",  # Desactivar captcha para que sea rápido
+        "_template": "table", # Formato tabla limpio
+        "Nombre": nombre,
+        "Equipo Actual": equipo,
+        "Posición": posicion,
+        "Email Jugador": email_jugador,
+        "WhatsApp": whatsapp,
+        "Highlights": link
+    }
+    
+    try:
+        response = requests.post(url, data=payload)
+        return response.status_code == 200
+    except:
+        return False
+
+# 2. LÓGICA POPUP (CON ENVÍO REAL)
 @st.dialog("🚀 ANÁLISIS PRELIMINAR")
 def show_contact_form():
     st.write("Rellena tus datos. Buscamos perfiles específicos para 2025/26.")
+    
     with st.form("popup_form"):
         name = st.text_input("Nombre Completo")
         c1, c2 = st.columns(2)
@@ -26,19 +55,29 @@ def show_contact_form():
         
         link = st.text_input("Link Highlights (Obligatorio)")
         
-        if st.form_submit_button("ENVIAR PERFIL", use_container_width=True):
-            st.success("✅ Perfil enviado al equipo de análisis.")
+        submitted = st.form_submit_button("ENVIAR PERFIL", use_container_width=True)
+        
+        if submitted:
+            if not name or not email or not link:
+                st.error("⚠️ Por favor, rellena al menos Nombre, Email y Link.")
+            else:
+                # Intentamos enviar el correo
+                exito = enviar_datos_a_email(name, team, position, email, phone, link)
+                if exito:
+                    st.success("✅ Perfil enviado al equipo de análisis. Te contactaremos pronto.")
+                    st.balloons() # Un poco de celebración visual
+                else:
+                    st.error("❌ Hubo un error al enviar. Por favor contáctanos por Instagram.")
 
-# 3. CSS "PURE DARK" (AJUSTADO: MENOS AGRESIVO)
+# 3. CSS "PURE DARK" (MANTENIENDO TU DISEÑO EXACTO)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
-    /* MÁRGENES LATERALES EQUILIBRADOS */
     .block-container { 
         padding-top: 2rem !important; 
         padding-bottom: 5rem !important; 
-        padding-left: 3rem !important; /* Ajustado para que no sea excesivo */
+        padding-left: 3rem !important;
         padding-right: 3rem !important;
         max-width: 100% !important; 
     }
@@ -50,7 +89,6 @@ st.markdown("""
     header { visibility: hidden; }
     footer { visibility: hidden; }
 
-    /* FONDO */
     .stApp { 
         background-color: #020617; 
         background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 80%);
@@ -58,7 +96,6 @@ st.markdown("""
         font-family: 'Inter', sans-serif; 
     }
 
-    /* NOMBRE DE LA AGENCIA (NUEVO) */
     .agency-name {
         color: #38bdf8;
         font-family: 'Kanit', sans-serif;
@@ -70,13 +107,12 @@ st.markdown("""
         text-align: center;
     }
 
-    /* TÍTULO PRINCIPAL (REDUCIDO) */
     h1 {
         font-family: 'Kanit', sans-serif;
         font-weight: 900 !important;
         font-style: italic;
         text-transform: uppercase;
-        font-size: 4.5rem !important; /* Bajado de 7rem a 4.5rem */
+        font-size: 4.5rem !important;
         line-height: 1 !important;
         background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
         -webkit-background-clip: text;
@@ -90,12 +126,12 @@ st.markdown("""
         font-family: 'Kanit', sans-serif;
         color: white !important;
         text-transform: uppercase;
-        font-size: 3rem !important; /* También reducido */
+        font-size: 3rem !important;
     }
     
     .subtitle {
         text-align: center;
-        font-size: 1.2rem; /* Reducido para elegancia */
+        font-size: 1.2rem;
         color: #94a3b8;
         max-width: 800px; 
         margin: 0 auto 40px auto;
@@ -103,7 +139,6 @@ st.markdown("""
         line-height: 1.6;
     }
 
-    /* BOTÓN */
     .stButton button {
         background: #38bdf8;
         color: #0f172a;
@@ -125,7 +160,6 @@ st.markdown("""
         background: white;
     }
 
-    /* TARJETAS */
     .stat-card, .info-card {
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid #1e293b;
@@ -135,7 +169,6 @@ st.markdown("""
         border-radius: 8px;
     }
     
-    /* ACORDEÓN */
     .stExpander { border: none !important; background: transparent !important; }
     .stExpander > details > summary {
         font-family: 'Kanit', sans-serif !important;
@@ -157,11 +190,7 @@ st.markdown("""
 
 # --- 1. HERO SECTION ---
 st.markdown("<br>", unsafe_allow_html=True)
-
-# NOMBRE DE LA AGENCIA (RECUPERADO)
 st.markdown('<p class="agency-name">US SOCCER TALENT & STRATEGY</p>', unsafe_allow_html=True)
-
-# Título Principal
 st.markdown("<h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8; -webkit-text-fill-color: #38bdf8;'>TU FUTURO EN USA.</span></h1>", unsafe_allow_html=True)
 
 st.markdown("""
@@ -171,7 +200,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Botón
 c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
