@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import requests
+import requests 
 
 # 1. CONFIGURACIÓN DE PÁGINA
 st.set_page_config(
@@ -11,36 +11,21 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- CONFIGURACIÓN DEL EMAIL (ACTUALIZADO) ---
-DESTINATARIO_EMAIL = "jaimecasadoesteban@gmail.com"
+# --- 🔴 PEGA AQUÍ TU URL DE N8N (PRODUCTION URL) 🔴 ---
+N8N_WEBHOOK_URL = "https://automatizaciones-n8n.wp4rv5.easypanel.host/webhook/contacto" 
 
-def enviar_datos_a_email(nombre, equipo, posicion, email_jugador, whatsapp, link):
-    """Función que envía los datos a tu correo usando FormSubmit"""
-    url = f"https://formsubmit.co/{DESTINATARIO_EMAIL}"
-    
-    # Datos que te llegarán
-    payload = {
-        "_subject": f"🚀 NUEVO TALENTO: {nombre}",  # Asunto del correo
-        "_captcha": "false",  # Desactivar captcha
-        "_template": "table", # Formato tabla limpio
-        "Nombre": nombre,
-        "Equipo Actual": equipo,
-        "Posición": posicion,
-        "Email Jugador": email_jugador,
-        "WhatsApp": whatsapp,
-        "Highlights": link
-    }
-    
+def enviar_datos_a_n8n(datos):
+    """Envía los datos al webhook de n8n"""
     try:
-        response = requests.post(url, data=payload)
+        response = requests.post(N8N_WEBHOOK_URL, json=datos)
         return response.status_code == 200
     except:
         return False
 
-# 2. LÓGICA POPUP (CON ENVÍO REAL)
+# 2. LÓGICA POPUP
 @st.dialog("🚀 ANÁLISIS PRELIMINAR")
 def show_contact_form():
-    st.write("Rellena tus datos. Buscamos perfiles específicos para 2025/26.")
+    st.write("Rellena tus datos. Nuestro algoritmo procesará tu perfil en tiempo real.")
     
     with st.form("popup_form"):
         name = st.text_input("Nombre Completo")
@@ -58,22 +43,32 @@ def show_contact_form():
         
         if submitted:
             if not name or not email or not link:
-                st.error("⚠️ Por favor, rellena al menos Nombre, Email y Link.")
+                st.error("⚠️ Por favor, rellena los campos obligatorios.")
             else:
-                # Intentamos enviar el correo
-                exito = enviar_datos_a_email(name, team, position, email, phone, link)
+                # Preparamos el paquete de datos para n8n
+                payload = {
+                    "nombre": name,
+                    "equipo": team,
+                    "posicion": position,
+                    "email": email,
+                    "telefono": phone,
+                    "video": link
+                }
+                
+                # Enviamos
+                exito = enviar_datos_a_n8n(payload)
+                
                 if exito:
-                    st.success("✅ Perfil enviado al equipo de análisis. Te contactaremos pronto.")
+                    st.success("✅ Perfil recibido correctamente. Te contactaremos en 24h.")
                     st.balloons()
                 else:
-                    st.error("❌ Hubo un error al enviar. Por favor contáctanos por Instagram.")
+                    st.error("⚠️ Error de conexión. Por favor contáctanos por Instagram.")
 
-# 3. CSS "PURE DARK" (ESTILO FINAL AJUSTADO)
+# 3. CSS "PURE DARK" (TU DISEÑO FINAL)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,900&family=Inter:wght@300;400;600&display=swap');
 
-    /* MÁRGENES LATERALES EQUILIBRADOS */
     .block-container { 
         padding-top: 2rem !important; 
         padding-bottom: 5rem !important; 
@@ -89,7 +84,6 @@ st.markdown("""
     header { visibility: hidden; }
     footer { visibility: hidden; }
 
-    /* FONDO */
     .stApp { 
         background-color: #020617; 
         background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 80%);
@@ -97,7 +91,6 @@ st.markdown("""
         font-family: 'Inter', sans-serif; 
     }
 
-    /* NOMBRE DE LA AGENCIA */
     .agency-name {
         color: #38bdf8;
         font-family: 'Kanit', sans-serif;
@@ -109,7 +102,6 @@ st.markdown("""
         text-align: center;
     }
 
-    /* TÍTULO PRINCIPAL (TAMAÑO CONTROLADO) */
     h1 {
         font-family: 'Kanit', sans-serif;
         font-weight: 900 !important;
@@ -142,7 +134,6 @@ st.markdown("""
         line-height: 1.6;
     }
 
-    /* BOTÓN */
     .stButton button {
         background: #38bdf8;
         color: #0f172a;
@@ -164,7 +155,6 @@ st.markdown("""
         background: white;
     }
 
-    /* TARJETAS */
     .stat-card, .info-card {
         background: rgba(15, 23, 42, 0.6);
         border: 1px solid #1e293b;
@@ -174,7 +164,6 @@ st.markdown("""
         border-radius: 8px;
     }
     
-    /* ACORDEÓN */
     .stExpander { border: none !important; background: transparent !important; }
     .stExpander > details > summary {
         font-family: 'Kanit', sans-serif !important;
@@ -196,11 +185,7 @@ st.markdown("""
 
 # --- 1. HERO SECTION ---
 st.markdown("<br>", unsafe_allow_html=True)
-
-# NOMBRE AGENCIA
 st.markdown('<p class="agency-name">US SOCCER TALENT & STRATEGY</p>', unsafe_allow_html=True)
-
-# TÍTULO
 st.markdown("<h1>TU TALENTO EN ESPAÑA.<br><span style='color:#38bdf8; -webkit-text-fill-color: #38bdf8;'>TU FUTURO EN USA.</span></h1>", unsafe_allow_html=True)
 
 st.markdown("""
@@ -210,7 +195,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# BOTÓN
 c1, c2, c3 = st.columns([1, 1, 1])
 with c2:
     if st.button("🚀 INICIAR EVALUACIÓN GRATUITA", use_container_width=True):
