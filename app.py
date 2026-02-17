@@ -13,7 +13,7 @@ st.set_page_config(
 
 # --- CONFIGURACIÓN DEL EMAIL ---
 # 🔴 ¡CAMBIA ESTO POR TU EMAIL REAL! 🔴
-DESTINATARIO_EMAIL = "pon_tu_email_aqui@ejemplo.com"
+DESTINATARIO_EMAIL = "jaimecasadoesteban@gmail.com"
 
 def enviar_datos_a_email(nombre, equipo, posicion, email_jugador, whatsapp, link):
     """Función que envía los datos a tu correo usando FormSubmit"""
