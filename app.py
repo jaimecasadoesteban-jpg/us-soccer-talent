@@ -25,7 +25,7 @@ def enviar_datos_a_n8n(datos):
 # 2. LÓGICA POPUP
 @st.dialog("🚀 ANÁLISIS PRELIMINAR")
 def show_contact_form():
-    st.write("Rellena tus datos. Nuestro algoritmo procesará tu perfil en tiempo real.")
+    st.write("Rellena tus datos. Procesaremos tu perfil en tiempo real.")
     
     with st.form("popup_form"):
         name = st.text_input("Nombre Completo")
@@ -262,7 +262,7 @@ with col_e1:
 with col_e2:
     info_card("🏟️", "DEPORTIVO", "Instalaciones que superan a muchos equipos profesionales de Europa. Fisios, gimnasios y estadios llenos.")
 with col_e3:
-    info_card("🇺🇸", "VISADO F-1", "Gestión integral. Desde el examen TOEFL hasta la entrevista en la embajada. Sin errores burocráticos.")
+    info_card("🇺🇸", "VISADO F-1", "Gestión integral. Desde el examen TOEFL hasta la entrevista en la embajada. Estamos contigo siempre.")
 
 # --- 4. SECCIÓN: FAQ ---
 st.markdown("<br><br><br>", unsafe_allow_html=True)
@@ -272,13 +272,13 @@ st.markdown("<p style='text-align:center; color:#94a3b8; margin-bottom:40px;'>Cl
 c_faq1, c_faq2 = st.columns([1, 2], gap="large")
 with c_faq2:
     with st.expander("❓ ¿QUÉ NIVEL NECESITO REALMENTE?"):
-        st.write("Las universidades buscan perfiles titulares en **División de Honor, Liga Nacional o Preferente Senior**. Nuestro algoritmo analiza tus métricas para encontrar tu encaje.")
+        st.write("Las universidades buscan perfiles en **2RFEF, 3RFEF, Preferente o Juvenil División de Honor**. Nuestro algoritmo analiza tus métricas para encontrar tu encaje.")
     
     with st.expander("💸 ¿LA BECA CUBRE EL 100%?"):
-        st.write("Es posible, pero la mayoría obtiene un **paquete mixto** (Deportiva + Académica + Internacional) para minimizar costes.")
+        st.write("Es posible, siempre y cuando a la universidad le encajes y hayas demostrado tu potencial.")
 
     with st.expander("🎓 ¿QUÉ PASA CON EL INGLÉS?"):
-        st.write("Necesitas aprobar TOEFL y SAT. Nosotros te ayudamos a prepararlos y gestionamos la documentación con las universidades.")
+        st.write("Necesitas aprobar TOEFL, SAT o Duolingo. No es un proceso complicado. Nosotros te ayudamos a prepararlos y gestionamos la documentación con las universidades.")
 
     with st.expander("🏥 ¿Y SI ME LESIONO?"):
         st.write("En NCAA tienes acceso a seguros médicos y fisios de élite sin coste. Además, suelen respetar tu beca académica durante la recuperación.")
